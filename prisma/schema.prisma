@@ -1,0 +1,118 @@
+// Prisma schema for "24" project
+// Design goal: landing-page-first launch (like 으랏차차24), but modeled so that
+// multi-service / multi-branch / multi-board expansion (like 영구크린) needs
+// no schema redesign later — only new rows/records.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  BRANCH_ADMIN
+}
+
+enum EstimateStatus {
+  NEW
+  CONTACTED
+  CONFIRMED
+  CANCELLED
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+}
+
+// One row per admin/operator account.
+// role is future-proofed for branch-scoped admins when Branch expansion happens.
+model AdminUser {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  name         String
+  role         AdminRole @default(SUPER_ADMIN)
+  branchId     String?
+  branch       Branch?   @relation(fields: [branchId], references: [id])
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+// Service catalog. Only one row is used at launch ("이사"),
+// but adding "청소", "설치/시공" etc. later is just inserting rows —
+// no migration needed. Menu/nav can render off this table.
+model Service {
+  id          String   @id @default(cuid())
+  category    String // e.g. "이사", "청소", "설치시공" (top-level menu grouping)
+  name        String // e.g. "가정이사", "원룸이사"
+  slug        String   @unique
+  description String?
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Branch/franchise table. Unused at launch but pre-modeled for the
+// "지점/대리점 확장" ask — AdminUser.branchId and Estimate.branchId
+// already point here so franchise rollout needs no schema change.
+model Branch {
+  id        String      @id @default(cuid())
+  name      String
+  region    String?
+  phone     String?
+  address   String?
+  isActive  Boolean     @default(true)
+  admins    AdminUser[]
+  estimates Estimate[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+// Generic board container, mirrors the "code" pattern seen on 영구크린
+// (board/index.jsp?code=qna|praise|event). Each board "code" is a content
+// type (review, qna, notice, event, ...). New content sections = new Board
+// row, not new tables.
+model Board {
+  id        String   @id @default(cuid())
+  code      String   @unique // "review" | "qna" | "notice" | "event" ...
+  name      String
+  posts     Post[]
+  createdAt DateTime @default(now())
+}
+
+model Post {
+  id        String     @id @default(cuid())
+  boardId   String
+  board     Board      @relation(fields: [boardId], references: [id])
+  title     String
+  body      String
+  images    String[]   @default([])
+  authorName String?
+  rating    Int? // used by review-type boards
+  status    PostStatus @default(PUBLISHED)
+  sortOrder Int        @default(0)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+// Quote/estimate request from the landing page form.
+model Estimate {
+  id         String         @id @default(cuid())
+  name       String
+  phone      String
+  fromAddr   String
+  toAddr     String
+  moveDate   DateTime?
+  memo       String?
+  status     EstimateStatus @default(NEW)
+  branchId   String?
+  branch     Branch?        @relation(fields: [branchId], references: [id])
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+}
