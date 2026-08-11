@@ -19,10 +19,10 @@ const HERO_VIDEOS = [
 // Curated Unsplash stock photos in the meantime — real, licensed-for-hotlink
 // stock (not generated), picked to roughly match each section's subject.
 const GALLERY_IMAGES = [
-  { src: "https://images.unsplash.com/photo-1772724317350-520faccb15e6?w=600&q=80&auto=format&fit=crop", caption: "포장이사" },
-  { src: "https://images.unsplash.com/photo-1758523671165-967ec4af0d76?w=600&q=80&auto=format&fit=crop", caption: "원룸이사" },
-  { src: "https://images.unsplash.com/photo-1758523671893-0ba21cf4260f?w=600&q=80&auto=format&fit=crop", caption: "가정이사" },
-  { src: "https://images.unsplash.com/photo-1577702312572-5bb9328a9f15?w=600&q=80&auto=format&fit=crop", caption: "사무실이사" },
+  { src: "https://images.unsplash.com/photo-1772724317350-520faccb15e6?w=900&q=80&auto=format&fit=crop", caption: "포장이사" },
+  { src: "https://images.unsplash.com/photo-1758523671165-967ec4af0d76?w=900&q=80&auto=format&fit=crop", caption: "원룸이사" },
+  { src: "https://images.unsplash.com/photo-1758523671893-0ba21cf4260f?w=900&q=80&auto=format&fit=crop", caption: "가정이사" },
+  { src: "https://images.unsplash.com/photo-1577702312572-5bb9328a9f15?w=900&q=80&auto=format&fit=crop", caption: "사무실이사" },
 ];
 
 // TODO: swap for real client photos once received.
@@ -131,7 +131,7 @@ export default async function Design1Page() {
       ? galleryPhotos.map((p) => ({
           id: p.id,
           src: p.imageUrl,
-          caption: p.caption ?? p.category,
+          caption: p.category,
         }))
       : GALLERY_IMAGES.map((g) => ({ id: g.src, src: g.src, caption: g.caption }));
 

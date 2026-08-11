@@ -33,6 +33,13 @@ export default async function AdminLayout({
             </nav>
           </div>
           <div className="flex items-center gap-3 text-sm text-zinc-600">
+            <Link
+              href="/design-1"
+              target="_blank"
+              className="rounded-md border border-zinc-300 px-3 py-1.5 hover:border-zinc-500 hover:text-zinc-900"
+            >
+              메인 화면 보기 ↗
+            </Link>
             <span>{session.name}님</span>
             <form action={logoutAction}>
               <button type="submit" className="text-zinc-900 underline">

@@ -38,7 +38,7 @@ export default async function AdminGalleryPage() {
           />
           <input
             name="caption"
-            placeholder="캡션 (선택, 비우면 이사 종류명으로 표시)"
+            placeholder="비고 (관리용 메모, 홈페이지에는 표시되지 않아요)"
             className="rounded-md border border-zinc-300 px-3 py-2 text-sm"
           />
           <button
@@ -67,7 +67,11 @@ export default async function AdminGalleryPage() {
               </div>
               <div className="p-2">
                 <p className="text-xs font-semibold text-zinc-700">{p.category}</p>
-                <p className="truncate text-xs text-zinc-400">{p.caption ?? "-"}</p>
+                {p.caption && (
+                  <p className="truncate text-xs text-zinc-400" title={p.caption}>
+                    비고: {p.caption}
+                  </p>
+                )}
                 <form
                   action={async () => {
                     "use server";
