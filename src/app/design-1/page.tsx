@@ -3,25 +3,34 @@ import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 import { COMPANY, HIGHLIGHTS } from "@/lib/content";
 import { EstimateForm } from "@/components/landing/EstimateForm";
-import { HeroSlideshow } from "@/components/design1/HeroSlideshow";
+import { HeroVideo } from "@/components/design1/HeroVideo";
 import { ReviewsCarousel } from "@/components/design1/ReviewsCarousel";
+
+// 클라이언트가 전달한 실제 배경 영상 (public/videos) — 순서대로 반복 재생
+const HERO_VIDEOS = [
+  "/videos/boxes-stacking.mp4",
+  "/videos/carrying-items.mp4",
+  "/videos/truck-opening.mp4",
+];
 
 // TODO: swap for real client photos (현장/차량/작업/대표 사진) once received.
 // Curated Unsplash stock photos in the meantime — real, licensed-for-hotlink
 // stock (not generated), picked to roughly match each section's subject.
-const HERO_IMAGES = [
-  { src: "https://images.unsplash.com/photo-1780932564199-1bcb4d9e6571?w=1600&q=80&auto=format&fit=crop", alt: "이사 준비 중인 거실" },
-  { src: "https://images.unsplash.com/photo-1758227365187-016878604d94?w=1600&q=80&auto=format&fit=crop", alt: "가족 이사" },
-  { src: "https://images.unsplash.com/photo-1758523671637-5a39ea2c129b?w=1600&q=80&auto=format&fit=crop", alt: "이사 포장 박스" },
-  { src: "https://images.unsplash.com/photo-1783473007464-1dbf2ff30dec?w=1600&q=80&auto=format&fit=crop", alt: "이사 정리" },
-];
-
 const GALLERY_IMAGES = [
   { src: "https://images.unsplash.com/photo-1772724317350-520faccb15e6?w=600&q=80&auto=format&fit=crop", caption: "포장이사" },
   { src: "https://images.unsplash.com/photo-1758523671165-967ec4af0d76?w=600&q=80&auto=format&fit=crop", caption: "원룸이사" },
   { src: "https://images.unsplash.com/photo-1758523671893-0ba21cf4260f?w=600&q=80&auto=format&fit=crop", caption: "가정이사" },
   { src: "https://images.unsplash.com/photo-1577702312572-5bb9328a9f15?w=600&q=80&auto=format&fit=crop", caption: "사무실이사" },
 ];
+
+const SERVICE_ICONS: Record<string, string> = {
+  포장이사: "📦",
+  가정이사: "🏠",
+  사무실이사: "🏢",
+  보관이사: "🗄️",
+  관공서이사: "🏛️",
+  원룸이사: "🛏️",
+};
 
 export const metadata = { title: `${COMPANY.name} - 시안 1` };
 
@@ -80,8 +89,8 @@ export default async function Design1Page() {
         </div>
       </header>
 
-      {/* Hero — full-bleed slideshow (임시 이미지, 실제 사진/영상 받으면 교체) */}
-      <HeroSlideshow images={HERO_IMAGES}>
+      {/* Hero — 실제 클라이언트 배경 영상 3개 순환 재생 */}
+      <HeroVideo sources={HERO_VIDEOS}>
         <p className="text-lg font-bold text-red-400 sm:text-xl">
           기쁜날 함께가는 좋은친구
         </p>
@@ -109,7 +118,7 @@ export default async function Design1Page() {
             전화 상담 {COMPANY.phone}
           </a>
         </div>
-      </HeroSlideshow>
+      </HeroVideo>
 
       {/* Badges */}
       <section className="border-y border-red-100 bg-red-50">
@@ -147,7 +156,7 @@ export default async function Design1Page() {
         </div>
       </section>
 
-      {/* Services */}
+      {/* Services — 아이콘 + 짧은 설명 + 태그칩으로 가독성 개선 */}
       <section id="services" className="bg-zinc-50 px-4 py-16 sm:px-6">
         <div className="mx-auto max-w-6xl">
           <h2 className="text-center text-2xl font-bold sm:text-3xl">서비스 안내</h2>
@@ -156,15 +165,30 @@ export default async function Design1Page() {
           </p>
           <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((s) => (
-              <div key={s.id} className="rounded-xl border border-red-100 bg-white p-6">
-                <h3 className="font-bold text-red-600">{s.name}</h3>
-                <p className="mt-2 text-sm text-zinc-600">{s.description}</p>
+              <div
+                key={s.id}
+                className="rounded-xl border border-red-100 bg-white p-6 shadow-sm"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-red-50 text-2xl">
+                    {SERVICE_ICONS[s.name] ?? "🚚"}
+                  </span>
+                  <h3 className="font-bold text-zinc-900">{s.name}</h3>
+                </div>
+                <p className="mt-3 text-sm leading-relaxed text-zinc-500">
+                  {s.description}
+                </p>
                 {s.features.length > 0 && (
-                  <ul className="mt-3 space-y-1 text-xs text-zinc-500">
+                  <div className="mt-4 flex flex-wrap gap-1.5">
                     {s.features.slice(0, 3).map((f) => (
-                      <li key={f}>· {f}</li>
+                      <span
+                        key={f}
+                        className="rounded-full bg-red-50 px-2.5 py-1 text-xs font-medium text-red-700"
+                      >
+                        {f}
+                      </span>
                     ))}
-                  </ul>
+                  </div>
                 )}
               </div>
             ))}
@@ -172,16 +196,22 @@ export default async function Design1Page() {
         </div>
       </section>
 
-      {/* Highlights */}
-      <section id="about" className="bg-gradient-to-br from-red-600 to-red-700 px-4 py-16 text-white sm:px-6">
+      {/* Highlights — 밝은 배경 + 강조 박스로 재조정 */}
+      <section id="about" className="bg-white px-4 py-16 sm:px-6">
         <div className="mx-auto max-w-4xl">
           <h2 className="text-center text-2xl font-bold sm:text-3xl">
             {COMPANY.name}가 다른 이유
           </h2>
-          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
-            {HIGHLIGHTS.map((h) => (
-              <div key={h} className="rounded-xl bg-white/10 p-6 text-center backdrop-blur">
-                <p className="text-sm font-semibold">{h}</p>
+          <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-3">
+            {HIGHLIGHTS.map((h, i) => (
+              <div
+                key={h}
+                className="rounded-xl border-2 border-red-100 bg-red-50/60 p-6 text-center shadow-sm"
+              >
+                <span className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-red-600 text-sm font-black text-white">
+                  {i + 1}
+                </span>
+                <p className="mt-4 text-base font-bold text-zinc-800">{h}</p>
               </div>
             ))}
           </div>
@@ -189,15 +219,17 @@ export default async function Design1Page() {
       </section>
 
       {/* Reviews */}
-      <section id="info" className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <h2 className="text-center text-2xl font-bold sm:text-3xl">고객 후기</h2>
-        <div className="mt-10">
-          <ReviewsCarousel reviews={reviews} />
+      <section id="info" className="bg-zinc-50 px-4 py-16 sm:px-6">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="text-center text-2xl font-bold sm:text-3xl">고객 후기</h2>
+          <div className="mt-10">
+            <ReviewsCarousel reviews={reviews} />
+          </div>
         </div>
       </section>
 
       {/* Estimate */}
-      <section id="estimate" className="bg-zinc-50 px-4 py-16 sm:px-6">
+      <section id="estimate" className="px-4 py-16 sm:px-6">
         <div className="mx-auto max-w-2xl">
           <h2 className="text-center text-2xl font-bold sm:text-3xl">무료 견적 요청</h2>
           <p className="mt-2 text-center text-zinc-500">
@@ -213,10 +245,53 @@ export default async function Design1Page() {
       <footer id="contact" className="bg-zinc-900 px-4 py-10 text-sm text-zinc-400 sm:px-6">
         <div className="mx-auto max-w-6xl">
           <p className="font-bold text-white">{COMPANY.name}</p>
-          <p className="mt-2">
-            대표: {COMPANY.ownerName} · 사업장 주소: {COMPANY.bizAddress}
-          </p>
-          <p className="mt-1">고객센터: {COMPANY.phone}</p>
+
+          {/* 상담 채널 */}
+          <div className="mt-4 flex flex-wrap gap-3">
+            <a
+              href={`tel:${COMPANY.phone}`}
+              className="rounded-full bg-red-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-red-700"
+            >
+              📞 고객센터 {COMPANY.phone}
+            </a>
+            {COMPANY.ownerPhone ? (
+              <a
+                href={`tel:${COMPANY.ownerPhone}`}
+                className="rounded-full border border-zinc-600 px-5 py-2.5 text-sm font-bold text-white hover:border-zinc-400"
+              >
+                📞 대표 직통 {COMPANY.ownerPhone}
+              </a>
+            ) : (
+              <span className="rounded-full border border-dashed border-zinc-600 px-5 py-2.5 text-sm font-bold text-zinc-500">
+                📞 대표 직통 (번호 나오면 연결)
+              </span>
+            )}
+            {COMPANY.kakaoUrl ? (
+              <a
+                href={COMPANY.kakaoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full bg-[#FEE500] px-5 py-2.5 text-sm font-bold text-black hover:brightness-95"
+              >
+                💬 카카오톡 상담
+              </a>
+            ) : (
+              <span className="rounded-full border border-dashed border-zinc-600 px-5 py-2.5 text-sm font-bold text-zinc-500">
+                💬 카카오톡 상담 (링크 나오면 연결)
+              </span>
+            )}
+          </div>
+
+          {/* 주소 — 사업자등록 주소와 실제 상담 위치를 구분 표기 */}
+          <div className="mt-6 space-y-1 text-xs">
+            <p>대표: {COMPANY.ownerName}</p>
+            <p>사업자등록 주소: {COMPANY.bizRegisteredAddress}</p>
+            <p>
+              사업장(상담) 주소:{" "}
+              {COMPANY.officeAddress ?? "안내 예정 (전달받는 대로 반영)"}
+            </p>
+          </div>
+
           <p className="mt-4 text-xs text-zinc-600">
             © {new Date().getFullYear()} {COMPANY.name}. All rights reserved.
           </p>

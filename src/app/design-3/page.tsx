@@ -153,7 +153,7 @@ export default async function Design3Page() {
       <footer id="contact" className="px-6 py-16 text-center text-sm text-stone-400">
         <p className="text-stone-600">{COMPANY.name}</p>
         <p className="mt-3">
-          대표 {COMPANY.ownerName} · {COMPANY.bizAddress}
+          대표 {COMPANY.ownerName} · {COMPANY.bizRegisteredAddress}
         </p>
         <p className="mt-1">{COMPANY.phone}</p>
         <p className="mt-6 text-xs">

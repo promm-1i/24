@@ -3,11 +3,14 @@
 
 export const COMPANY = {
   name: "이사가요",
-  phone: "1544-2477",
-  kakaoUrl: null as string | null, // TODO: 카카오톡 상담 링크 (고객사 준비 중)
-  address: null as string | null, // TODO: 사업장 주소 (고객사 준비 중)
+  phone: "1544-2477", // 고객센터 대표번호
+  kakaoUrl: null as string | null, // TODO: 카카오톡 상담 채널 링크 나오면 채워넣기
+  ownerPhone: null as string | null, // TODO: 대표 직통 연결번호 나오면 채워넣기
   ownerName: "김미경",
-  bizAddress: "충청남도 천안시 서북구 천안대로 1324 (신당동)",
+  // 사업자등록상 주소 (사업자정보) — 실제 상담/영업 위치와 다를 수 있어 구분해서 표기
+  bizRegisteredAddress: "충청남도 천안시 서북구 천안대로 1324 (신당동)",
+  // 실제 상담을 받는 사업장 주소 — 아직 고객사에서 확정 전
+  officeAddress: null as string | null, // TODO: 사업장 주소 나오면 채워넣기
 };
 
 export const HIGHLIGHTS = [

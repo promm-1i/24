@@ -185,7 +185,7 @@ export default async function Design2Page() {
         <div className="mx-auto max-w-6xl">
           <p className="font-bold text-white">{COMPANY.name}</p>
           <p className="mt-2">
-            대표: {COMPANY.ownerName} · 사업장 주소: {COMPANY.bizAddress}
+            대표: {COMPANY.ownerName} · 사업자등록 주소: {COMPANY.bizRegisteredAddress}
           </p>
           <p className="mt-1">고객센터: {COMPANY.phone}</p>
           <p className="mt-4 text-xs text-slate-600">
