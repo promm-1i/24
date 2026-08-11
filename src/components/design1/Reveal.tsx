@@ -6,8 +6,10 @@ type Direction = "up" | "left" | "right";
 
 const HIDDEN_TRANSFORM: Record<Direction, string> = {
   up: "translate-y-10",
-  left: "-translate-x-16",
-  right: "translate-x-16",
+  // Large viewport-relative offsets so left/right reveals genuinely start
+  // from the screen edges instead of a small in-place nudge.
+  left: "-translate-x-[60vw] sm:-translate-x-[45vw]",
+  right: "translate-x-[60vw] sm:translate-x-[45vw]",
 };
 
 // Fades/slides children in when they scroll into view, and back out again
