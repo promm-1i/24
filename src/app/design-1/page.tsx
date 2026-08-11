@@ -1,13 +1,26 @@
 import Link from "next/link";
+import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 import { COMPANY, HIGHLIGHTS } from "@/lib/content";
 import { EstimateForm } from "@/components/landing/EstimateForm";
+
+// TODO: swap for real client photos (현장/차량/작업/대표 사진) once received.
+// picsum.photos/seed/<seed> returns the same stock photo for a given seed,
+// so these stay stable across rebuilds until they're replaced.
+const HERO_IMAGE = "https://picsum.photos/seed/isagayo-hero/1000/900";
+const GALLERY_IMAGES = [
+  { seed: "isagayo-1", caption: "포장 작업" },
+  { seed: "isagayo-2", caption: "이사 차량" },
+  { seed: "isagayo-3", caption: "현장 정리" },
+  { seed: "isagayo-4", caption: "고객 상담" },
+];
 
 export const metadata = { title: `${COMPANY.name} - 시안 1` };
 
 const NAV = [
   { href: "#about", label: "회사소개" },
   { href: "#services", label: "서비스안내" },
+  { href: "#gallery", label: "현장사진" },
   { href: "#info", label: "이사정보" },
   { href: "#contact", label: "고객센터" },
 ];
@@ -91,21 +104,16 @@ export default async function Design1Page() {
           </div>
         </div>
 
-        {/* Illustrated hero visual (placeholder for real photo) */}
-        <div className="relative h-72 overflow-hidden rounded-2xl bg-gradient-to-br from-zinc-50 to-zinc-100 sm:h-96">
-          <div className="absolute bottom-6 left-1/2 flex -translate-x-1/2 gap-3">
-            {[0, 1, 2].map((i) => (
-              <div
-                key={i}
-                className="relative h-24 w-20 rounded-md bg-gradient-to-br from-amber-200 to-amber-300 shadow-md sm:h-32 sm:w-28"
-                style={{ marginTop: i === 1 ? 0 : 20 }}
-              >
-                <span className="absolute left-1/2 top-2 -translate-x-1/2 rounded bg-red-600 px-1.5 py-0.5 text-[9px] font-bold text-white">
-                  이사가요
-                </span>
-              </div>
-            ))}
-          </div>
+        {/* 임시 이미지 — 실제 사진 받으면 교체 예정 */}
+        <div className="relative h-72 overflow-hidden rounded-2xl sm:h-96">
+          <Image
+            src={HERO_IMAGE}
+            alt="이사가요 이사 서비스"
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover"
+            priority
+          />
         </div>
       </section>
 
@@ -116,6 +124,27 @@ export default async function Design1Page() {
             <div key={b.label} className="flex flex-col items-center gap-3 text-center">
               <span className="text-4xl sm:text-5xl">{b.icon}</span>
               <span className="text-lg font-bold text-zinc-700 sm:text-xl">{b.label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Gallery — 임시 이미지, 실제 현장/차량 사진 받으면 교체 예정 */}
+      <section id="gallery" className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+        <h2 className="text-center text-2xl font-bold sm:text-3xl">현장 사진</h2>
+        <p className="mt-2 text-center text-zinc-500">
+          실제 현장·차량 사진은 전달받는 대로 교체됩니다
+        </p>
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {GALLERY_IMAGES.map((g) => (
+            <div key={g.seed} className="relative aspect-square overflow-hidden rounded-lg">
+              <Image
+                src={`https://picsum.photos/seed/${g.seed}/500/500`}
+                alt={g.caption}
+                fill
+                sizes="(max-width: 640px) 50vw, 25vw"
+                className="object-cover"
+              />
             </div>
           ))}
         </div>
