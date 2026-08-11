@@ -62,7 +62,9 @@ export default async function Design1Page() {
       {/* Hero */}
       <section className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-4 py-16 sm:px-6 md:grid-cols-2 md:py-24">
         <div>
-          <p className="text-sm font-bold text-red-600">이사가요와 함께라면</p>
+          <p className="text-lg font-bold text-red-600 sm:text-xl">
+            기쁜날 함께가는 좋은친구
+          </p>
           <h1 className="mt-3 text-3xl font-extrabold leading-tight sm:text-5xl">
             믿음직한 이사,
             <br />
@@ -76,13 +78,13 @@ export default async function Design1Page() {
           <div className="mt-8 flex flex-wrap gap-3">
             <a
               href="#estimate"
-              className="rounded-full bg-red-600 px-7 py-3 text-sm font-bold text-white hover:bg-red-700"
+              className="rounded-full bg-red-600 px-8 py-4 text-base font-bold text-white hover:bg-red-700 sm:text-lg"
             >
               무료 견적 신청
             </a>
             <a
               href={`tel:${COMPANY.phone}`}
-              className="rounded-full border border-zinc-300 px-7 py-3 text-sm font-bold text-zinc-700 hover:border-zinc-400"
+              className="rounded-full border border-zinc-300 px-8 py-4 text-base font-bold text-zinc-700 hover:border-zinc-400 sm:text-lg"
             >
               전화 상담 {COMPANY.phone}
             </a>
@@ -111,9 +113,9 @@ export default async function Design1Page() {
       <section className="border-y border-zinc-100 bg-zinc-50">
         <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 py-8 sm:px-6 md:grid-cols-4">
           {BADGES.map((b) => (
-            <div key={b.label} className="flex flex-col items-center gap-2 text-center">
-              <span className="text-2xl">{b.icon}</span>
-              <span className="text-sm font-semibold text-zinc-700">{b.label}</span>
+            <div key={b.label} className="flex flex-col items-center gap-3 text-center">
+              <span className="text-4xl sm:text-5xl">{b.icon}</span>
+              <span className="text-lg font-bold text-zinc-700 sm:text-xl">{b.label}</span>
             </div>
           ))}
         </div>
