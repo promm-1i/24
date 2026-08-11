@@ -52,6 +52,7 @@ model Service {
   name        String // e.g. "가정이사", "원룸이사"
   slug        String   @unique
   description String?
+  features    String[] @default([])
   isActive    Boolean  @default(true)
   sortOrder   Int      @default(0)
   createdAt   DateTime @default(now())

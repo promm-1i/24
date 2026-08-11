@@ -8,8 +8,36 @@ type SubmitState =
   | { status: "success" }
   | { status: "error"; message: string };
 
-export function EstimateForm() {
+const ACCENT_STYLES = {
+  blue: {
+    focus: "focus:border-blue-500",
+    button: "bg-blue-600 hover:bg-blue-700",
+    link: "text-blue-600",
+  },
+  red: {
+    focus: "focus:border-red-500",
+    button: "bg-red-600 hover:bg-red-700",
+    link: "text-red-600",
+  },
+  slate: {
+    focus: "focus:border-slate-500",
+    button: "bg-slate-800 hover:bg-slate-900",
+    link: "text-slate-700",
+  },
+  stone: {
+    focus: "focus:border-stone-500",
+    button: "bg-stone-800 hover:bg-stone-900",
+    link: "text-stone-700",
+  },
+} as const;
+
+export function EstimateForm({
+  accent = "blue",
+}: {
+  accent?: keyof typeof ACCENT_STYLES;
+}) {
   const [state, setState] = useState<SubmitState>({ status: "idle" });
+  const styles = ACCENT_STYLES[accent];
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -60,7 +88,7 @@ export function EstimateForm() {
         <button
           type="button"
           onClick={() => setState({ status: "idle" })}
-          className="mt-4 text-sm font-semibold text-blue-600 underline"
+          className={`mt-4 text-sm font-semibold underline ${styles.link}`}
         >
           견적 다시 요청하기
         </button>
@@ -69,45 +97,37 @@ export function EstimateForm() {
   }
 
   const submitting = state.status === "submitting";
+  const inputClass = `rounded-md border border-zinc-300 px-3 py-2 text-sm outline-none ${styles.focus}`;
 
   return (
     <form
       onSubmit={handleSubmit}
       className="grid grid-cols-1 gap-3 rounded-xl bg-white p-6 shadow-sm sm:grid-cols-2 sm:p-8"
     >
-      <input
-        name="name"
-        required
-        placeholder="이름"
-        className="rounded-md border border-zinc-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
-      />
+      <input name="name" required placeholder="이름" className={inputClass} />
       <input
         name="phone"
         required
         placeholder="연락처 (010-0000-0000)"
-        className="rounded-md border border-zinc-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+        className={inputClass}
       />
       <input
         name="fromAddr"
         required
         placeholder="출발지 주소"
-        className="rounded-md border border-zinc-300 px-3 py-2 text-sm outline-none focus:border-blue-500 sm:col-span-2"
+        className={`${inputClass} sm:col-span-2`}
       />
       <input
         name="toAddr"
         required
         placeholder="도착지 주소"
-        className="rounded-md border border-zinc-300 px-3 py-2 text-sm outline-none focus:border-blue-500 sm:col-span-2"
+        className={`${inputClass} sm:col-span-2`}
       />
-      <input
-        name="moveDate"
-        type="date"
-        className="rounded-md border border-zinc-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
-      />
+      <input name="moveDate" type="date" className={inputClass} />
       <input
         name="memo"
         placeholder="요청 사항 (선택)"
-        className="rounded-md border border-zinc-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+        className={inputClass}
       />
 
       {state.status === "error" && (
@@ -117,7 +137,7 @@ export function EstimateForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="mt-2 rounded-md bg-blue-600 px-4 py-3 text-sm font-bold text-white hover:bg-blue-700 disabled:opacity-50 sm:col-span-2"
+        className={`mt-2 rounded-md px-4 py-3 text-sm font-bold text-white disabled:opacity-50 sm:col-span-2 ${styles.button}`}
       >
         {submitting ? "전송 중..." : "무료 견적 요청하기"}
       </button>

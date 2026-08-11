@@ -2,6 +2,7 @@ import "dotenv/config";
 import bcrypt from "bcryptjs";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { SERVICES } from "../src/lib/content";
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
@@ -29,21 +30,32 @@ async function main() {
     create: { code: "review", name: "고객 후기" },
   });
 
-  const services = [
-    { category: "이사", name: "가정이사", slug: "home-move", description: "가족 단위 포장이사, 전 과정 책임 진행", sortOrder: 1 },
-    { category: "이사", name: "원룸이사", slug: "studio-move", description: "자취생·1인 가구를 위한 합리적인 이사", sortOrder: 2 },
-    { category: "이사", name: "보관이사", slug: "storage-move", description: "이사와 보관을 한 번에, 안전한 물품 보관", sortOrder: 3 },
-    { category: "이사", name: "사무실이사", slug: "office-move", description: "기업·사무실 이전, 주말·야간 진행 가능", sortOrder: 4 },
-  ];
+  // Remove placeholder services from the earlier scaffold so only the
+  // client-provided 6 services remain.
+  const currentSlugs = SERVICES.map((s) => s.slug);
+  await prisma.service.deleteMany({ where: { slug: { notIn: currentSlugs } } });
 
-  for (const service of services) {
+  for (const service of SERVICES) {
     await prisma.service.upsert({
       where: { slug: service.slug },
-      update: {},
-      create: service,
+      update: {
+        category: service.category,
+        name: service.name,
+        description: service.description,
+        features: service.features,
+        sortOrder: service.sortOrder,
+      },
+      create: {
+        category: service.category,
+        name: service.name,
+        slug: service.slug,
+        description: service.description,
+        features: service.features,
+        sortOrder: service.sortOrder,
+      },
     });
   }
-  console.log(`Seeded ${services.length} services`);
+  console.log(`Seeded ${SERVICES.length} services`);
 }
 
 main()
