@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { KOREA_REGIONS, SIDO_LIST } from "@/lib/koreaRegions";
 
 type SubmitState =
   | { status: "idle" }
@@ -31,18 +32,87 @@ const ACCENT_STYLES = {
   },
 } as const;
 
-export function EstimateForm({
-  accent = "blue",
+type AccentKey = keyof typeof ACCENT_STYLES;
+
+function AddressFields({
+  label,
+  sido,
+  gugun,
+  onSidoChange,
+  onGugunChange,
+  detailName,
+  inputClass,
+  selectClass,
 }: {
-  accent?: keyof typeof ACCENT_STYLES;
+  label: string;
+  sido: string;
+  gugun: string;
+  onSidoChange: (v: string) => void;
+  onGugunChange: (v: string) => void;
+  detailName: string;
+  inputClass: string;
+  selectClass: string;
 }) {
+  const gugunOptions = sido ? KOREA_REGIONS[sido] : [];
+
+  return (
+    <div className="sm:col-span-2">
+      <p className="mb-1 text-xs font-semibold text-zinc-500">{label}</p>
+      <div className="grid grid-cols-2 gap-2">
+        <select
+          required
+          value={sido}
+          onChange={(e) => onSidoChange(e.target.value)}
+          className={selectClass}
+        >
+          <option value="">시/도 선택</option>
+          {SIDO_LIST.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
+        <select
+          required
+          value={gugun}
+          onChange={(e) => onGugunChange(e.target.value)}
+          disabled={!sido}
+          className={`${selectClass} disabled:bg-zinc-50 disabled:text-zinc-400`}
+        >
+          <option value="">시/군/구 선택</option>
+          {gugunOptions.map((g) => (
+            <option key={g} value={g}>
+              {g}
+            </option>
+          ))}
+        </select>
+      </div>
+      <input
+        name={detailName}
+        placeholder="상세주소 (동/건물명, 선택)"
+        className={`mt-2 w-full ${inputClass}`}
+      />
+    </div>
+  );
+}
+
+export function EstimateForm({ accent = "blue" }: { accent?: AccentKey }) {
   const [state, setState] = useState<SubmitState>({ status: "idle" });
+  const [fromSido, setFromSido] = useState("");
+  const [fromGugun, setFromGugun] = useState("");
+  const [toSido, setToSido] = useState("");
+  const [toGugun, setToGugun] = useState("");
   const styles = ACCENT_STYLES[accent];
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
+
+    const fromDetail = String(data.get("fromDetail") ?? "").trim();
+    const toDetail = String(data.get("toDetail") ?? "").trim();
+    const fromAddr = [fromSido, fromGugun, fromDetail].filter(Boolean).join(" ");
+    const toAddr = [toSido, toGugun, toDetail].filter(Boolean).join(" ");
 
     setState({ status: "submitting" });
 
@@ -53,8 +123,8 @@ export function EstimateForm({
         body: JSON.stringify({
           name: data.get("name"),
           phone: data.get("phone"),
-          fromAddr: data.get("fromAddr"),
-          toAddr: data.get("toAddr"),
+          fromAddr,
+          toAddr,
           moveDate: data.get("moveDate"),
           memo: data.get("memo"),
         }),
@@ -70,6 +140,10 @@ export function EstimateForm({
       }
 
       form.reset();
+      setFromSido("");
+      setFromGugun("");
+      setToSido("");
+      setToGugun("");
       setState({ status: "success" });
     } catch {
       setState({ status: "error", message: "네트워크 오류가 발생했습니다." });
@@ -98,6 +172,7 @@ export function EstimateForm({
 
   const submitting = state.status === "submitting";
   const inputClass = `rounded-md border border-zinc-300 px-3 py-2 text-sm outline-none ${styles.focus}`;
+  const selectClass = `rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm outline-none ${styles.focus}`;
 
   return (
     <form
@@ -111,23 +186,39 @@ export function EstimateForm({
         placeholder="연락처 (010-0000-0000)"
         className={inputClass}
       />
-      <input
-        name="fromAddr"
-        required
-        placeholder="출발지 주소"
-        className={`${inputClass} sm:col-span-2`}
+
+      <AddressFields
+        label="출발지"
+        sido={fromSido}
+        gugun={fromGugun}
+        onSidoChange={(v) => {
+          setFromSido(v);
+          setFromGugun("");
+        }}
+        onGugunChange={setFromGugun}
+        detailName="fromDetail"
+        inputClass={inputClass}
+        selectClass={selectClass}
       />
-      <input
-        name="toAddr"
-        required
-        placeholder="도착지 주소"
-        className={`${inputClass} sm:col-span-2`}
+      <AddressFields
+        label="도착지"
+        sido={toSido}
+        gugun={toGugun}
+        onSidoChange={(v) => {
+          setToSido(v);
+          setToGugun("");
+        }}
+        onGugunChange={setToGugun}
+        detailName="toDetail"
+        inputClass={inputClass}
+        selectClass={selectClass}
       />
-      <input name="moveDate" type="date" className={inputClass} />
+
+      <input name="moveDate" type="date" className={`${inputClass} sm:col-span-2`} />
       <input
         name="memo"
-        placeholder="요청 사항 (선택)"
-        className={inputClass}
+        placeholder="요청 사항 (선택, 한 줄로 입력)"
+        className={`${inputClass} sm:col-span-2`}
       />
 
       {state.status === "error" && (
