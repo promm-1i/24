@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { sendEstimateNotification } from "@/lib/email";
 
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
@@ -41,6 +42,8 @@ export async function POST(request: Request) {
   const estimate = await prisma.estimate.create({
     data: { name, phone, fromAddr, toAddr, moveDate, memo },
   });
+
+  await sendEstimateNotification(estimate);
 
   return NextResponse.json({ id: estimate.id }, { status: 201 });
 }
