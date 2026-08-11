@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { createAdminSession, destroyAdminSession } from "@/lib/auth";
+import { supabaseAdmin, GALLERY_BUCKET } from "@/lib/supabaseAdmin";
 
 export type ActionState = { error?: string } | null;
 
@@ -96,14 +97,31 @@ export async function deleteReviewAction(postId: string) {
 
 export async function createGalleryPhotoAction(formData: FormData) {
   const category = String(formData.get("category") ?? "").trim();
-  const imageUrl = String(formData.get("imageUrl") ?? "").trim();
   const caption = String(formData.get("caption") ?? "").trim() || null;
+  const file = formData.get("photo");
 
-  if (!category || !imageUrl) return;
-  if (!/^https?:\/\//.test(imageUrl)) return;
+  if (!category || !(file instanceof File) || file.size === 0) return;
+
+  const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
+  const path = `${crypto.randomUUID()}.${ext}`;
+
+  const { error } = await supabaseAdmin.storage
+    .from(GALLERY_BUCKET)
+    .upload(path, await file.arrayBuffer(), {
+      contentType: file.type || "image/jpeg",
+    });
+
+  if (error) {
+    console.error("Gallery photo upload failed:", error);
+    return;
+  }
+
+  const { data: publicUrlData } = supabaseAdmin.storage
+    .from(GALLERY_BUCKET)
+    .getPublicUrl(path);
 
   await prisma.galleryPhoto.create({
-    data: { category, imageUrl, caption },
+    data: { category, imageUrl: publicUrlData.publicUrl, caption },
   });
 
   revalidatePath("/admin/gallery");
@@ -111,7 +129,13 @@ export async function createGalleryPhotoAction(formData: FormData) {
 }
 
 export async function deleteGalleryPhotoAction(photoId: string) {
-  await prisma.galleryPhoto.delete({ where: { id: photoId } });
+  const photo = await prisma.galleryPhoto.delete({ where: { id: photoId } });
+
+  const path = photo.imageUrl.split(`/${GALLERY_BUCKET}/`).pop();
+  if (path) {
+    await supabaseAdmin.storage.from(GALLERY_BUCKET).remove([path]);
+  }
+
   revalidatePath("/admin/gallery");
   revalidatePath("/design-1");
 }

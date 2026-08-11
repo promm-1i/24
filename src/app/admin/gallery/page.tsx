@@ -14,8 +14,7 @@ export default async function AdminGalleryPage() {
       <section className="rounded-lg bg-white p-6 shadow-sm">
         <h1 className="mb-1 text-lg font-bold text-zinc-900">현장 사진 등록</h1>
         <p className="mb-4 text-xs text-zinc-500">
-          지금은 이미지 URL을 붙여넣는 방식이에요. 파일을 직접 업로드하려면
-          Supabase Storage 연동이 추가로 필요합니다 (요청하면 이어서 설정할게요).
+          사진 파일을 선택해서 올리면 자동으로 저장돼요 (최대 5MB, jpg/png/webp/gif).
         </p>
         <form action={createGalleryPhotoAction} className="flex flex-col gap-3">
           <select
@@ -31,10 +30,11 @@ export default async function AdminGalleryPage() {
             ))}
           </select>
           <input
-            name="imageUrl"
+            name="photo"
+            type="file"
+            accept="image/png,image/jpeg,image/webp,image/gif"
             required
-            placeholder="이미지 URL (https://...)"
-            className="rounded-md border border-zinc-300 px-3 py-2 text-sm"
+            className="rounded-md border border-zinc-300 px-3 py-2 text-sm file:mr-3 file:rounded file:border-0 file:bg-zinc-900 file:px-3 file:py-1.5 file:text-white"
           />
           <input
             name="caption"
