@@ -45,3 +45,14 @@ body {
     transform: translateX(0);
   }
 }
+
+/* Continuous right-to-left review ticker (design-1). Track is rendered
+   twice; animating exactly -50% makes the loop point invisible. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}

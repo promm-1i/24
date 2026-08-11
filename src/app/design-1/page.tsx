@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { prisma } from "@/lib/prisma";
-import { COMPANY, HIGHLIGHTS } from "@/lib/content";
+import { COMPANY } from "@/lib/content";
 import { EstimateForm } from "@/components/landing/EstimateForm";
 import { HeroVideo } from "@/components/design1/HeroVideo";
-import { ReviewsCarousel } from "@/components/design1/ReviewsCarousel";
+import { ReviewsMarquee } from "@/components/design1/ReviewsMarquee";
 
 // 클라이언트가 전달한 실제 배경 영상 (public/videos) — 순서대로 반복 재생
 const HERO_VIDEOS = [
@@ -21,6 +21,28 @@ const GALLERY_IMAGES = [
   { src: "https://images.unsplash.com/photo-1758523671165-967ec4af0d76?w=600&q=80&auto=format&fit=crop", caption: "원룸이사" },
   { src: "https://images.unsplash.com/photo-1758523671893-0ba21cf4260f?w=600&q=80&auto=format&fit=crop", caption: "가정이사" },
   { src: "https://images.unsplash.com/photo-1577702312572-5bb9328a9f15?w=600&q=80&auto=format&fit=crop", caption: "사무실이사" },
+];
+
+// TODO: swap for real client photos once received.
+const HIGHLIGHT_ITEMS = [
+  {
+    title: "외국인 NO, 한국인으로만 구성된 직영팀",
+    desc: "하청 없이 이사가요 소속 직영 인력이 처음부터 끝까지 직접 진행합니다.",
+    image: "https://images.unsplash.com/photo-1600518464441-9154a4dea21b?w=900&q=80&auto=format&fit=crop",
+    alt: "이사가요 직영팀",
+  },
+  {
+    title: "견적을 본 매니저가 직접 이삿날 방문",
+    desc: "현장을 확인한 담당 매니저가 이사 당일까지 직접 챙기고 관리합니다.",
+    image: "https://images.unsplash.com/photo-1523705480679-b5d0cc17a656?w=900&q=80&auto=format&fit=crop",
+    alt: "현장 방문 견적 작성",
+  },
+  {
+    title: "합리적인 비용, 꼼꼼한 포장·운반",
+    desc: "불필요한 비용 없이 합리적인 가격으로, 포장은 더 꼼꼼하게 진행합니다.",
+    image: "https://images.unsplash.com/photo-1580451301279-9ffaa7d55b4b?w=900&q=80&auto=format&fit=crop",
+    alt: "꼼꼼한 포장",
+  },
 ];
 
 const SERVICE_ICONS: Record<string, string> = {
@@ -196,35 +218,51 @@ export default async function Design1Page() {
         </div>
       </section>
 
-      {/* Highlights — 밝은 배경 + 강조 박스로 재조정 */}
+      {/* Highlights — 항목마다 텍스트/이미지 교차 배치로 강조 */}
       <section id="about" className="bg-white px-4 py-16 sm:px-6">
-        <div className="mx-auto max-w-4xl">
+        <div className="mx-auto max-w-5xl">
           <h2 className="text-center text-2xl font-bold sm:text-3xl">
             {COMPANY.name}가 다른 이유
           </h2>
-          <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-3">
-            {HIGHLIGHTS.map((h, i) => (
+          <div className="mt-12 flex flex-col gap-14">
+            {HIGHLIGHT_ITEMS.map((item, i) => (
               <div
-                key={h}
-                className="rounded-xl border-2 border-red-100 bg-red-50/60 p-6 text-center shadow-sm"
+                key={item.title}
+                className={`flex flex-col items-center gap-6 md:flex-row md:gap-10 ${
+                  i % 2 === 1 ? "md:flex-row-reverse" : ""
+                }`}
               >
-                <span className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-red-600 text-sm font-black text-white">
-                  {i + 1}
-                </span>
-                <p className="mt-4 text-base font-bold text-zinc-800">{h}</p>
+                <div className="relative h-56 w-full overflow-hidden rounded-2xl sm:h-72 md:w-1/2">
+                  <Image
+                    src={item.image}
+                    alt={item.alt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="md:w-1/2">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-red-600 text-sm font-black text-white">
+                    {i + 1}
+                  </span>
+                  <h3 className="mt-4 text-xl font-bold text-zinc-900 sm:text-2xl">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-zinc-500">
+                    {item.desc}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Reviews */}
-      <section id="info" className="bg-zinc-50 px-4 py-16 sm:px-6">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="text-center text-2xl font-bold sm:text-3xl">고객 후기</h2>
-          <div className="mt-10">
-            <ReviewsCarousel reviews={reviews} />
-          </div>
+      {/* Reviews — 오른쪽에서 왼쪽으로 끊김없이 흐르는 티커 */}
+      <section id="info" className="bg-zinc-50 py-16">
+        <h2 className="text-center text-2xl font-bold sm:text-3xl">고객 후기</h2>
+        <div className="mt-10">
+          <ReviewsMarquee reviews={reviews} />
         </div>
       </section>
 
