@@ -81,11 +81,37 @@ export async function createReviewAction(formData: FormData) {
   });
 
   revalidatePath("/admin/reviews");
-  revalidatePath("/");
+  revalidatePath("/design-1");
+  revalidatePath("/design-2");
+  revalidatePath("/design-3");
 }
 
 export async function deleteReviewAction(postId: string) {
   await prisma.post.delete({ where: { id: postId } });
   revalidatePath("/admin/reviews");
-  revalidatePath("/");
+  revalidatePath("/design-1");
+  revalidatePath("/design-2");
+  revalidatePath("/design-3");
+}
+
+export async function createGalleryPhotoAction(formData: FormData) {
+  const category = String(formData.get("category") ?? "").trim();
+  const imageUrl = String(formData.get("imageUrl") ?? "").trim();
+  const caption = String(formData.get("caption") ?? "").trim() || null;
+
+  if (!category || !imageUrl) return;
+  if (!/^https?:\/\//.test(imageUrl)) return;
+
+  await prisma.galleryPhoto.create({
+    data: { category, imageUrl, caption },
+  });
+
+  revalidatePath("/admin/gallery");
+  revalidatePath("/design-1");
+}
+
+export async function deleteGalleryPhotoAction(photoId: string) {
+  await prisma.galleryPhoto.delete({ where: { id: photoId } });
+  revalidatePath("/admin/gallery");
+  revalidatePath("/design-1");
 }

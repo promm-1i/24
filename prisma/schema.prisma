@@ -102,6 +102,17 @@ model Post {
   updatedAt DateTime   @updatedAt
 }
 
+// 관리자가 등록하는 현장 사진. category는 Service.slug와 매칭해서
+// "이사 종류별" 갤러리 필터링에 사용 (지금은 랜딩페이지에서 전체 노출).
+model GalleryPhoto {
+  id        String   @id @default(cuid())
+  category  String
+  imageUrl  String
+  caption   String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
 // Quote/estimate request from the landing page form.
 model Estimate {
   id         String         @id @default(cuid())

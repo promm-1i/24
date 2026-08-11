@@ -27,6 +27,9 @@ export default async function AdminLayout({
               <Link href="/admin/reviews" className="hover:text-zinc-900">
                 후기 관리
               </Link>
+              <Link href="/admin/gallery" className="hover:text-zinc-900">
+                현장사진 관리
+              </Link>
             </nav>
           </div>
           <div className="flex items-center gap-3 text-sm text-zinc-600">
