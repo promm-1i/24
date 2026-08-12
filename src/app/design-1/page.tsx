@@ -99,9 +99,13 @@ export default async function Design1Page() {
       <header className="sticky top-0 z-50 border-b border-zinc-100 bg-white/95 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-600 text-sm font-black text-white">
-              이사
-            </div>
+            <Image
+              src="/images/logo-icon.png"
+              alt={`${COMPANY.name} 로고`}
+              width={32}
+              height={32}
+              className="h-8 w-8 object-contain"
+            />
             <span className="text-lg font-extrabold">{COMPANY.name}</span>
           </div>
           <nav className="hidden gap-6 text-sm font-medium text-zinc-600 md:flex">
@@ -197,9 +201,13 @@ export default async function Design1Page() {
       <section id="about" className="bg-white px-4 py-16 sm:px-6">
         <div className="mx-auto max-w-5xl">
           <h2 className="flex items-center justify-center gap-2 text-center text-2xl font-bold sm:text-3xl">
-            <span className="flex h-7 w-7 items-center justify-center rounded bg-red-600 text-[10px] font-black text-white">
-              CI
-            </span>
+            <Image
+              src="/images/logo-icon.png"
+              alt={`${COMPANY.name} 로고`}
+              width={28}
+              height={28}
+              className="h-7 w-7 object-contain"
+            />
             {COMPANY.name}가 다른 이유
           </h2>
           <div className="mt-16 flex flex-col gap-24 sm:gap-32">
@@ -225,7 +233,7 @@ export default async function Design1Page() {
                     </div>
                   </Reveal>
                   <Reveal direction={textFrom} className="w-full md:w-2/5">
-                    <p className="font-mono text-xs tracking-[0.3em] text-red-600">
+                    <p className="font-mono text-sm font-bold tracking-[0.2em] text-red-600 sm:text-base">
                       {String(i + 1).padStart(2, "0")} — {item.keyword}
                     </p>
                     <h3 className="mt-4 text-2xl font-bold text-zinc-900 sm:text-3xl">

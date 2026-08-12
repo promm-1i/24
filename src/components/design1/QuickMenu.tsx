@@ -11,7 +11,7 @@ export function QuickMenu() {
       {/* Desktop / tablet */}
       <nav
         aria-label="빠른 메뉴"
-        className="fixed right-5 top-1/2 z-40 hidden -translate-y-1/2 flex-col overflow-hidden rounded-md border border-zinc-200 bg-white/90 shadow-lg backdrop-blur md:flex"
+        className="fixed right-5 top-1/2 z-40 hidden -translate-y-1/2 flex-col overflow-hidden rounded-md border-2 border-red-600 bg-white/90 shadow-lg backdrop-blur md:flex"
       >
         <a
           href="#estimate"
