@@ -57,9 +57,9 @@ export function ServiceShowcase({ services }: { services: ServiceItem[] }) {
                   isActive ? "text-red-600" : "text-zinc-400 hover:text-zinc-600"
                 }`}
               >
-                <span className="text-xs font-mono">{String(i + 1).padStart(2, "0")}</span>
+                <span className="text-sm font-mono">{String(i + 1).padStart(2, "0")}</span>
                 <span
-                  className={`text-xl transition-all sm:text-2xl ${
+                  className={`text-3xl transition-all sm:text-4xl ${
                     isActive ? "font-bold" : "font-medium"
                   }`}
                 >
@@ -68,7 +68,7 @@ export function ServiceShowcase({ services }: { services: ServiceItem[] }) {
               </button>
               {isActive && (
                 <div className="animate-[fade-slide_0.4s_ease-out] pb-6 pl-8">
-                  <p className="text-sm leading-relaxed text-zinc-500">{s.description}</p>
+                  <p className="text-lg leading-relaxed text-zinc-500">{s.description}</p>
                   {s.features.length > 0 && (
                     <ul className="mt-3 flex flex-col gap-1 text-xs text-zinc-400">
                       {s.features.slice(0, 3).map((f) => (

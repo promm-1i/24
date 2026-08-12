@@ -12,7 +12,6 @@ import { QuickMenu } from "@/components/design1/QuickMenu";
 
 // 클라이언트가 전달한 실제 배경 영상 (public/videos) — 순서대로 반복 재생
 const HERO_VIDEOS = [
-  "/videos/boxes-stacking.mp4",
   "/videos/carrying-items.mp4",
   "/videos/truck-opening.mp4",
 ];
@@ -31,22 +30,22 @@ const GALLERY_IMAGES = [
 const HIGHLIGHT_ITEMS = [
   {
     keyword: "DIRECT TEAM",
-    title: "외국인 NO, 한국인으로만 구성된 직영팀",
-    desc: "하청 없이 이사가요 소속 직영 인력이 처음부터 끝까지 직접 진행합니다.",
+    titleLines: ["외국인 NO,", "한국인으로만 구성된 직영팀"],
+    descLines: ["하청 없이 이사가요 소속 직영 인력이 처음부터 끝까지", "직접 진행합니다."],
     image: "https://images.unsplash.com/photo-1600518464441-9154a4dea21b?w=1200&q=80&auto=format&fit=crop",
     alt: "이사가요 직영팀",
   },
   {
     keyword: "SAME MANAGER",
-    title: "견적을 본 매니저가 직접 이삿날 방문",
-    desc: "현장을 확인한 담당 매니저가 이사 당일까지 직접 챙기고 관리합니다.",
+    titleLines: ["견적을 본 매니저가", "직접 이삿날 방문"],
+    descLines: ["현장을 확인한 담당 매니저가 이사 당일까지 직접 챙기고 관리합니다."],
     image: "https://images.unsplash.com/photo-1523705480679-b5d0cc17a656?w=1200&q=80&auto=format&fit=crop",
     alt: "현장 방문 견적 작성",
   },
   {
     keyword: "CAREFUL MOVING",
-    title: "합리적인 비용, 꼼꼼한 포장·운반",
-    desc: "불필요한 비용 없이 합리적인 가격으로, 포장은 더 꼼꼼하게 진행합니다.",
+    titleLines: ["합리적인 비용,", "꼼꼼한 포장·운반"],
+    descLines: ["불필요한 비용 없이 합리적인 가격으로, 포장은 더 꼼꼼하게 진행합니다."],
     image: "https://images.unsplash.com/photo-1580451301279-9ffaa7d55b4b?w=1200&q=80&auto=format&fit=crop",
     alt: "꼼꼼한 포장",
   },
@@ -220,7 +219,7 @@ export default async function Design1Page() {
               const textFrom = i % 2 === 0 ? "right" : "left";
               return (
                 <div
-                  key={item.title}
+                  key={item.keyword}
                   className={`flex flex-col items-center gap-8 md:flex-row md:gap-14 ${
                     i % 2 === 1 ? "md:flex-row-reverse" : ""
                   }`}
@@ -241,10 +240,20 @@ export default async function Design1Page() {
                       {String(i + 1).padStart(2, "0")} — {item.keyword}
                     </p>
                     <h3 className="mt-4 text-2xl font-bold text-zinc-900 sm:text-3xl">
-                      {item.title}
+                      {item.titleLines.map((line, li) => (
+                        <span key={line}>
+                          {line}
+                          {li < item.titleLines.length - 1 && <br />}
+                        </span>
+                      ))}
                     </h3>
                     <p className="mt-4 text-sm leading-relaxed text-zinc-500 sm:text-base">
-                      {item.desc}
+                      {item.descLines.map((line, li) => (
+                        <span key={line}>
+                          {line}
+                          {li < item.descLines.length - 1 && <br />}
+                        </span>
+                      ))}
                     </p>
                   </Reveal>
                 </div>
