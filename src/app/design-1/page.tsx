@@ -9,6 +9,7 @@ import { GalleryMarquee } from "@/components/design1/GalleryMarquee";
 import { Reveal } from "@/components/design1/Reveal";
 import { ServiceShowcase } from "@/components/design1/ServiceShowcase";
 import { QuickMenu } from "@/components/design1/QuickMenu";
+import { InsuranceBadge } from "@/components/design1/InsuranceBadge";
 
 // 클라이언트가 전달한 실제 배경 영상 (public/videos) — 순서대로 반복 재생
 const HERO_VIDEOS = [
@@ -21,8 +22,8 @@ const HERO_VIDEOS = [
 // stock (not generated), picked to roughly match each section's subject.
 const GALLERY_IMAGES = [
   { src: "https://images.unsplash.com/photo-1772724317350-520faccb15e6?w=900&q=80&auto=format&fit=crop", caption: "포장이사" },
-  { src: "https://images.unsplash.com/photo-1758523671165-967ec4af0d76?w=900&q=80&auto=format&fit=crop", caption: "원룸이사" },
-  { src: "https://images.unsplash.com/photo-1758523671893-0ba21cf4260f?w=900&q=80&auto=format&fit=crop", caption: "가정이사" },
+  { src: "https://images.unsplash.com/photo-1758523671165-967ec4af0d76?w=900&q=80&auto=format&fit=crop", caption: "원/투룸이사" },
+  { src: "https://images.unsplash.com/photo-1766040923580-16ad32fae8b4?w=900&q=80&auto=format&fit=crop", caption: "보관이사" },
   { src: "https://images.unsplash.com/photo-1577702312572-5bb9328a9f15?w=900&q=80&auto=format&fit=crop", caption: "사무실이사" },
 ];
 
@@ -31,21 +32,21 @@ const HIGHLIGHT_ITEMS = [
   {
     keyword: "DIRECT TEAM",
     titleLines: ["외국인 NO,", "한국인으로만 구성된 직영팀"],
-    descLines: ["하청 없이 이사가요 소속 직영 인력이 처음부터 끝까지", "직접 진행합니다."],
+    descLines: ["하청 없이 이사가요 소속 직영팀이 처음부터 끝까지", "직접 진행합니다."],
     image: "https://images.unsplash.com/photo-1600518464441-9154a4dea21b?w=1200&q=80&auto=format&fit=crop",
     alt: "이사가요 직영팀",
   },
   {
     keyword: "SAME MANAGER",
-    titleLines: ["견적을 본 매니저가", "직접 이삿날 방문"],
+    titleLines: ["방문견적을 담당 매니저가", "이사 당일 처음부터 끝까지 책임관리 합니다"],
     descLines: ["현장을 확인한 담당 매니저가 이사 당일까지 직접 챙기고 관리합니다."],
     image: "https://images.unsplash.com/photo-1523705480679-b5d0cc17a656?w=1200&q=80&auto=format&fit=crop",
     alt: "현장 방문 견적 작성",
   },
   {
     keyword: "CAREFUL MOVING",
-    titleLines: ["합리적인 비용,", "꼼꼼한 포장·운반"],
-    descLines: ["불필요한 비용 없이 합리적인 가격으로, 포장은 더 꼼꼼하게 진행합니다."],
+    titleLines: ["합리적인비용,", "철저한 사후관리 및 AS"],
+    descLines: ["불필요한 비용없이 합리적인 가격으로 진행하며,", "철저한 사후관리 및 AS"],
     image: "https://images.unsplash.com/photo-1580451301279-9ffaa7d55b4b?w=1200&q=80&auto=format&fit=crop",
     alt: "꼼꼼한 포장",
   },
@@ -124,7 +125,7 @@ export default async function Design1Page() {
       </header>
 
       {/* Hero — 실제 클라이언트 배경 영상 3개 순환 재생 */}
-      <HeroVideo sources={HERO_VIDEOS}>
+      <HeroVideo sources={HERO_VIDEOS} cornerBadge={<InsuranceBadge />}>
         <p className="text-lg font-bold text-red-400 sm:text-xl">
           기쁜날 함께가는 좋은친구
         </p>

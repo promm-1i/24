@@ -11,9 +11,11 @@ type Slot = { src: string; active: boolean };
 export function HeroVideo({
   sources,
   children,
+  cornerBadge,
 }: {
   sources: string[];
   children: React.ReactNode;
+  cornerBadge?: React.ReactNode;
 }) {
   const [slots, setSlots] = useState<Slot[]>(() => [
     { src: sources[0], active: true },
@@ -91,6 +93,10 @@ export function HeroVideo({
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/35 to-black/60" />
 
       <div className="relative z-10 px-4 text-center text-white sm:px-6">{children}</div>
+
+      {cornerBadge && (
+        <div className="absolute right-4 top-4 z-20 sm:right-6 sm:top-6">{cornerBadge}</div>
+      )}
 
       {sources.length > 1 && (
         <div className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 gap-2">

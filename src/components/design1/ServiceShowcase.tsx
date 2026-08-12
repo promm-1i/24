@@ -12,11 +12,10 @@ type ServiceItem = {
 // TODO: swap for real client photos once received.
 const SERVICE_IMAGES: Record<string, string> = {
   포장이사: "https://images.unsplash.com/photo-1772724317350-520faccb15e6?w=1000&q=80&auto=format&fit=crop",
-  가정이사: "https://images.unsplash.com/photo-1758523671893-0ba21cf4260f?w=1000&q=80&auto=format&fit=crop",
   사무실이사: "https://images.unsplash.com/photo-1577702312572-5bb9328a9f15?w=1000&q=80&auto=format&fit=crop",
   보관이사: "https://images.unsplash.com/photo-1766040923580-16ad32fae8b4?w=1000&q=80&auto=format&fit=crop",
   관공서이사: "https://images.unsplash.com/photo-1785423832602-53aa5bfd6cd6?w=1000&q=80&auto=format&fit=crop",
-  원룸이사: "https://images.unsplash.com/photo-1758523671165-967ec4af0d76?w=1000&q=80&auto=format&fit=crop",
+  "원/투룸이사": "https://images.unsplash.com/photo-1758523671165-967ec4af0d76?w=1000&q=80&auto=format&fit=crop",
 };
 
 const FALLBACK_IMAGE = SERVICE_IMAGES["포장이사"];
@@ -59,7 +58,7 @@ export function ServiceShowcase({ services }: { services: ServiceItem[] }) {
               >
                 <span className="text-sm font-mono">{String(i + 1).padStart(2, "0")}</span>
                 <span
-                  className={`text-3xl transition-all sm:text-4xl ${
+                  className={`text-2xl transition-all sm:text-3xl ${
                     isActive ? "font-bold" : "font-medium"
                   }`}
                 >
@@ -70,7 +69,7 @@ export function ServiceShowcase({ services }: { services: ServiceItem[] }) {
                 <div className="animate-[fade-slide_0.4s_ease-out] pb-6 pl-8">
                   <p className="text-lg leading-relaxed text-zinc-500">{s.description}</p>
                   {s.features.length > 0 && (
-                    <ul className="mt-3 flex flex-col gap-1 text-xs text-zinc-400">
+                    <ul className="mt-3 flex flex-col gap-1 text-sm text-zinc-400">
                       {s.features.slice(0, 3).map((f) => (
                         <li key={f}>— {f}</li>
                       ))}

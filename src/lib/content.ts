@@ -36,17 +36,18 @@ export const SERVICES = [
     ],
   },
   {
-    slug: "home-move",
+    slug: "storage-move",
     category: "이사",
-    name: "가정이사",
+    name: "보관이사",
     sortOrder: 2,
     description:
-      "가족 단위의 주거 이전을 위한 전문 서비스입니다. 가구, 가전제품, 생활용품 등 모든 생활용품을 안전하게 운송합니다.",
+      "임시 거주나 리모델링 등으로 인해 짐을 보관해야 할 때 이용하는 서비스입니다.",
     features: [
-      "전문 포장재를 이용한 안전한 포장",
-      "가구 분해 및 조립 서비스",
-      "가전제품 설치 및 연결",
-      "냉장고 스팀청소 (옵션)",
+      "안전한 창고 보관 시설",
+      "습도 및 온도 조절",
+      "24시간 보안 시스템",
+      "필요시 부분 반출 가능",
+      "최대 6개월 보관 가능",
       "보험 적용으로 안전 보장",
     ],
   },
@@ -66,26 +67,10 @@ export const SERVICES = [
     ],
   },
   {
-    slug: "storage-move",
-    category: "이사",
-    name: "보관이사",
-    sortOrder: 4,
-    description:
-      "임시 거주나 리모델링 등으로 인해 짐을 보관해야 할 때 이용하는 서비스입니다.",
-    features: [
-      "안전한 창고 보관 시설",
-      "습도 및 온도 조절",
-      "24시간 보안 시스템",
-      "필요시 부분 반출 가능",
-      "최대 6개월 보관 가능",
-      "보험 적용으로 안전 보장",
-    ],
-  },
-  {
     slug: "government-move",
     category: "이사",
     name: "관공서이사",
-    sortOrder: 5,
+    sortOrder: 4,
     description:
       "관공서의 서류·집기·장비 등을 안전하고 체계적으로 포장·운반·배치하는 전문 이사 서비스입니다.",
     features: [
@@ -101,8 +86,8 @@ export const SERVICES = [
   {
     slug: "studio-move",
     category: "이사",
-    name: "원룸이사",
-    sortOrder: 6,
+    name: "원/투룸이사",
+    sortOrder: 5,
     description:
       "소량의 짐을 신속하고 안전하게 포장·운반·정리해드리는 1인 가구 맞춤형 이사 서비스입니다.",
     features: [
