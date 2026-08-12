@@ -67,7 +67,7 @@ export function HeroVideo({
   const activeIndex = sources.indexOf(slots.find((s) => s.active)?.src ?? sources[0]);
 
   return (
-    <section className="relative flex h-[520px] items-center justify-center overflow-hidden sm:h-[640px]">
+    <section className="relative flex h-[520px] items-center justify-center overflow-hidden bg-black sm:h-[640px]">
       {slots.map((slot, i) => (
         <video
           key={i}
@@ -78,8 +78,10 @@ export function HeroVideo({
             slot.active ? "opacity-100" : "opacity-0"
           }`}
           src={slot.src}
+          autoPlay
           muted
           playsInline
+          disablePictureInPicture
           preload="auto"
           onEnded={() => handleEnded(i)}
         />
