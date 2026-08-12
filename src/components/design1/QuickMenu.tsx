@@ -15,16 +15,16 @@ export function QuickMenu() {
       >
         <a
           href="#estimate"
-          className="group flex flex-col items-center gap-1.5 border-b border-zinc-100 px-[13px] py-5 text-sm font-semibold text-zinc-600 transition-colors hover:bg-red-50 hover:text-red-600"
+          className="group flex flex-col items-center gap-1.5 border-b border-zinc-100 px-2 py-5 text-xs font-semibold text-zinc-600 transition-colors hover:bg-red-50 hover:text-red-600"
         >
-          <span aria-hidden className="text-2xl">✎</span>
+          <span aria-hidden className="text-xl">✎</span>
           무료 견적
         </a>
         <a
           href={`tel:${COMPANY.phone}`}
-          className="group flex flex-col items-center gap-1.5 border-b border-zinc-100 px-[13px] py-5 text-sm font-semibold text-zinc-600 transition-colors hover:bg-red-50 hover:text-red-600"
+          className="group flex flex-col items-center gap-1.5 border-b border-zinc-100 px-2 py-5 text-xs font-semibold text-zinc-600 transition-colors hover:bg-red-50 hover:text-red-600"
         >
-          <span aria-hidden className="text-2xl">☎</span>
+          <span aria-hidden className="text-xl">☎</span>
           전화 상담
         </a>
         {kakaoHref ? (
@@ -32,14 +32,14 @@ export function QuickMenu() {
             href={kakaoHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex flex-col items-center gap-1.5 px-[13px] py-5 text-sm font-semibold text-zinc-600 transition-colors hover:bg-[#FEE500]/20 hover:text-zinc-900"
+            className="group flex flex-col items-center gap-1.5 px-2 py-5 text-xs font-semibold text-zinc-600 transition-colors hover:bg-[#FEE500]/20 hover:text-zinc-900"
           >
-            <span aria-hidden className="text-2xl">💬</span>
+            <span aria-hidden className="text-xl">💬</span>
             카카오 상담
           </a>
         ) : (
-          <span className="flex flex-col items-center gap-1.5 px-[13px] py-5 text-sm font-semibold text-zinc-300">
-            <span aria-hidden className="text-2xl">💬</span>
+          <span className="flex flex-col items-center gap-1.5 px-2 py-5 text-xs font-semibold text-zinc-300">
+            <span aria-hidden className="text-xl">💬</span>
             카카오 상담
           </span>
         )}
