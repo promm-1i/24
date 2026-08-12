@@ -155,8 +155,10 @@ export default async function Design1Page() {
         </div>
       </HeroVideo>
 
+      {/* 모바일에서는 현장사진 다음에 다른이유가 오도록 순서 조정, PC는 기존 순서 유지 */}
+      <div className="flex flex-col">
       {/* Badges */}
-      <section className="border-y border-red-100 bg-red-50">
+      <section className="order-1 border-y border-red-100 bg-red-50">
         <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 py-8 sm:px-6 md:grid-cols-4">
           {BADGES.map((b) => (
             <div key={b.label} className="flex flex-col items-center gap-3 text-center">
@@ -168,7 +170,7 @@ export default async function Design1Page() {
       </section>
 
       {/* Gallery — 오른쪽에서 왼쪽으로 흐르는 티커, 관리자 페이지에서 등록한 사진이 우선 노출 */}
-      <section id="gallery" className="py-16">
+      <section id="gallery" className="order-2 py-16">
         <Reveal direction="up">
           <h2 className="text-center text-2xl font-bold sm:text-3xl">현장 사진</h2>
           <p className="mt-2 text-center text-zinc-500">
@@ -181,7 +183,8 @@ export default async function Design1Page() {
       </section>
 
       {/* Services — 좌측 대표 이미지 + 우측 세로 목록, 호버/탭으로 전환 */}
-      <section id="services" className="px-4 py-20 sm:px-6">
+      {/* 모바일: 다른이유 다음(4번째), PC: 다른이유 앞(3번째) */}
+      <section id="services" className="order-4 px-4 py-20 sm:px-6 md:order-3">
         <div className="mx-auto max-w-6xl">
           <Reveal direction="up">
             <h2 className="text-2xl font-bold sm:text-3xl">서비스 안내</h2>
@@ -198,7 +201,8 @@ export default async function Design1Page() {
       </section>
 
       {/* Highlights — 항목마다 텍스트/이미지 교차 배치 + 반대 방향 슬라이드 강조 */}
-      <section id="about" className="bg-white px-4 py-16 sm:px-6">
+      {/* 모바일: 현장사진 다음(3번째), PC: 서비스안내 다음(4번째) */}
+      <section id="about" className="order-3 bg-white px-4 py-16 sm:px-6 md:order-4">
         <div className="mx-auto max-w-5xl">
           <h2 className="flex items-center justify-center gap-2 text-center text-2xl font-bold sm:text-3xl">
             <Image
@@ -251,7 +255,7 @@ export default async function Design1Page() {
       </section>
 
       {/* Reviews — 오른쪽에서 왼쪽으로 끊김없이 흐르는 티커 */}
-      <section id="info" className="bg-zinc-50 py-16">
+      <section id="info" className="order-5 bg-zinc-50 py-16">
         <Reveal direction="up">
           <h2 className="text-center text-2xl font-bold sm:text-3xl">고객 후기</h2>
         </Reveal>
@@ -261,7 +265,7 @@ export default async function Design1Page() {
       </section>
 
       {/* Estimate */}
-      <section id="estimate" className="px-4 py-16 sm:px-6">
+      <section id="estimate" className="order-6 px-4 py-16 sm:px-6">
         <div className="mx-auto max-w-2xl">
           <Reveal direction="up">
             <h2 className="text-center text-2xl font-bold sm:text-3xl">무료 견적 요청</h2>
@@ -274,6 +278,7 @@ export default async function Design1Page() {
           </div>
         </div>
       </section>
+      </div>
 
       {/* Footer */}
       <footer id="contact" className="bg-zinc-900 px-4 py-10 text-sm text-zinc-400 sm:px-6">
