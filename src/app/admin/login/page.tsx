@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { LoginForm } from "./LoginForm";
 
 export const metadata = {
@@ -10,6 +11,12 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-sm rounded-xl bg-white p-8 shadow-sm">
         <h1 className="mb-6 text-xl font-bold text-zinc-900">관리자 로그인</h1>
         <LoginForm />
+        <Link
+          href="/design-1"
+          className="mt-6 block text-center text-xs text-zinc-400 underline hover:text-zinc-600"
+        >
+          ← 메인 화면으로 돌아가기
+        </Link>
       </div>
     </div>
   );

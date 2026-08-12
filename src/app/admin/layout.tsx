@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAdminSession } from "@/lib/auth";
 import { logoutAction } from "./actions";
+import { AdminNav } from "./AdminNav";
 
 export default async function AdminLayout({
   children,
@@ -20,17 +21,7 @@ export default async function AdminLayout({
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-6">
             <span className="font-bold text-zinc-900">관리자</span>
-            <nav className="flex gap-4 text-sm text-zinc-600">
-              <Link href="/admin" className="hover:text-zinc-900">
-                견적 요청
-              </Link>
-              <Link href="/admin/reviews" className="hover:text-zinc-900">
-                후기 관리
-              </Link>
-              <Link href="/admin/gallery" className="hover:text-zinc-900">
-                현장사진 관리
-              </Link>
-            </nav>
+            <AdminNav />
           </div>
           <div className="flex items-center gap-3 text-sm text-zinc-600">
             <Link
