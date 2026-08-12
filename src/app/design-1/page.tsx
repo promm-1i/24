@@ -38,14 +38,14 @@ const HIGHLIGHT_ITEMS = [
   },
   {
     keyword: "SAME MANAGER",
-    titleLines: ["방문견적을 담당 매니저가", "이사 당일 처음부터 끝까지 책임관리 합니다"],
+    titleLines: ["방문견적을 담당 매니저가", "이사 당일 처음부터 끝까지", "책임관리 합니다"],
     descLines: ["현장을 확인한 담당 매니저가 이사 당일까지 직접 챙기고 관리합니다."],
     image: "https://images.unsplash.com/photo-1523705480679-b5d0cc17a656?w=1200&q=80&auto=format&fit=crop",
     alt: "현장 방문 견적 작성",
   },
   {
     keyword: "CAREFUL MOVING",
-    titleLines: ["합리적인비용,", "철저한 사후관리 및 AS"],
+    titleLines: ["합리적인 비용,", "철저한 사후관리 및 AS"],
     descLines: ["불필요한 비용없이 합리적인 가격으로 진행하며,", "철저한 사후관리 및 AS"],
     image: "https://images.unsplash.com/photo-1580451301279-9ffaa7d55b4b?w=1200&q=80&auto=format&fit=crop",
     alt: "꼼꼼한 포장",
@@ -288,6 +288,11 @@ export default async function Design1Page() {
           </div>
         </div>
       </section>
+      </div>
+
+      {/* KB손해보험 배상보험 가입 고지 — 푸터 바로 위 한 줄 */}
+      <div className="bg-zinc-950 px-4 py-2.5 text-center text-xs font-semibold text-amber-400 sm:px-6">
+        KB손해보험 이삿짐배상보험 3억원 가입
       </div>
 
       {/* Footer */}
