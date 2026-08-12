@@ -23,6 +23,15 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Reveal's off-screen translateX (before an item scrolls into view) is
+   pure paint overflow — it doesn't affect layout, but it does extend the
+   page's horizontal scrollable area unless something clips it. This was
+   causing a right-side gap you could scroll into on mobile. */
+html,
+body {
+  overflow-x: hidden;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
