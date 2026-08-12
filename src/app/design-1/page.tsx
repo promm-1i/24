@@ -7,6 +7,8 @@ import { HeroVideo } from "@/components/design1/HeroVideo";
 import { ReviewsMarquee } from "@/components/design1/ReviewsMarquee";
 import { GalleryMarquee } from "@/components/design1/GalleryMarquee";
 import { Reveal } from "@/components/design1/Reveal";
+import { ServiceShowcase } from "@/components/design1/ServiceShowcase";
+import { QuickMenu } from "@/components/design1/QuickMenu";
 
 // 클라이언트가 전달한 실제 배경 영상 (public/videos) — 순서대로 반복 재생
 const HERO_VIDEOS = [
@@ -28,72 +30,27 @@ const GALLERY_IMAGES = [
 // TODO: swap for real client photos once received.
 const HIGHLIGHT_ITEMS = [
   {
+    keyword: "DIRECT TEAM",
     title: "외국인 NO, 한국인으로만 구성된 직영팀",
     desc: "하청 없이 이사가요 소속 직영 인력이 처음부터 끝까지 직접 진행합니다.",
-    image: "https://images.unsplash.com/photo-1600518464441-9154a4dea21b?w=900&q=80&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1600518464441-9154a4dea21b?w=1200&q=80&auto=format&fit=crop",
     alt: "이사가요 직영팀",
   },
   {
+    keyword: "SAME MANAGER",
     title: "견적을 본 매니저가 직접 이삿날 방문",
     desc: "현장을 확인한 담당 매니저가 이사 당일까지 직접 챙기고 관리합니다.",
-    image: "https://images.unsplash.com/photo-1523705480679-b5d0cc17a656?w=900&q=80&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1523705480679-b5d0cc17a656?w=1200&q=80&auto=format&fit=crop",
     alt: "현장 방문 견적 작성",
   },
   {
+    keyword: "CAREFUL MOVING",
     title: "합리적인 비용, 꼼꼼한 포장·운반",
     desc: "불필요한 비용 없이 합리적인 가격으로, 포장은 더 꼼꼼하게 진행합니다.",
-    image: "https://images.unsplash.com/photo-1580451301279-9ffaa7d55b4b?w=900&q=80&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1580451301279-9ffaa7d55b4b?w=1200&q=80&auto=format&fit=crop",
     alt: "꼼꼼한 포장",
   },
 ];
-
-const SERVICE_ICONS: Record<string, string> = {
-  포장이사: "📦",
-  가정이사: "🏠",
-  사무실이사: "🏢",
-  보관이사: "🗄️",
-  관공서이사: "🏛️",
-  원룸이사: "🛏️",
-};
-
-// 데스크탑에서만 적용되는 줄바꿈 위치 (고객 요청 지점). 모바일은 자연스럽게 흐름.
-const DESKTOP_LINE_BREAKS: Record<string, string[]> = {
-  "포장이사": [
-    "포장부터 운반, 정리까지 한 번에 진행해주는 편리한",
-    "이사 서비스입니다. 가구, 가전제품, 생활용품 등",
-    "모든 생활용품을 안전하게 포장하고 운송합니다.",
-  ],
-  "가정이사": [
-    "가족 단위의 주거 이전을 위한 전문 서비스입니다.",
-    "가구, 가전제품, 생활용품 등 모든 생활용품을",
-    "안전하게 운송합니다.",
-  ],
-  "사무실이사": [
-    "사무실·사업장의 집기와 장비를 안전하게",
-    "포장·운반·정리해주는 전문 이사 서비스입니다.",
-  ],
-  "관공서이사": [
-    "관공서의 서류·집기·장비 등을 안전하고 체계적으로",
-    "포장·운반·배치하는 전문 이사 서비스입니다.",
-  ],
-};
-
-function ServiceDescription({ name, description }: { name: string; description: string | null }) {
-  const lines = DESKTOP_LINE_BREAKS[name];
-  if (!lines) return <>{description}</>;
-
-  return (
-    <>
-      {lines.map((line, i) => (
-        <span key={line}>
-          {line}
-          {i < lines.length - 1 && <br className="hidden sm:block" />}
-          {i < lines.length - 1 && <span className="sm:hidden"> </span>}
-        </span>
-      ))}
-    </>
-  );
-}
 
 export const metadata = { title: `${COMPANY.name} - 시안 1` };
 
@@ -136,7 +93,8 @@ export default async function Design1Page() {
       : GALLERY_IMAGES.map((g) => ({ id: g.src, src: g.src, caption: g.caption }));
 
   return (
-    <div className="min-h-screen bg-white text-zinc-900">
+    <div className="min-h-screen bg-white pb-16 text-zinc-900 md:pb-0">
+      <QuickMenu />
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-zinc-100 bg-white/95 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
@@ -218,43 +176,19 @@ export default async function Design1Page() {
         </div>
       </section>
 
-      {/* Services — 아이콘 + 짧은 설명 + 태그칩으로 가독성 개선 */}
-      <section id="services" className="bg-zinc-50 px-4 py-16 sm:px-6">
+      {/* Services — 좌측 대표 이미지 + 우측 세로 목록, 호버/탭으로 전환 */}
+      <section id="services" className="px-4 py-20 sm:px-6">
         <div className="mx-auto max-w-6xl">
           <Reveal direction="up">
-            <h2 className="text-center text-2xl font-bold sm:text-3xl">서비스 안내</h2>
-            <p className="mt-2 text-center text-zinc-500">
+            <h2 className="text-2xl font-bold sm:text-3xl">서비스 안내</h2>
+            <p className="mt-2 text-zinc-500">
               고객님의 상황에 맞는 이사 서비스를 선택해주세요
             </p>
           </Reveal>
-          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map((s, i) => (
-              <Reveal key={s.id} direction="up" delayMs={(i % 3) * 100}>
-                <div className="rounded-xl border border-red-100 bg-white p-6 shadow-sm">
-                  <div className="flex items-center gap-3">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-red-50 text-2xl">
-                      {SERVICE_ICONS[s.name] ?? "🚚"}
-                    </span>
-                    <h3 className="font-bold text-zinc-900">{s.name}</h3>
-                  </div>
-                  <p className="mt-3 text-sm leading-relaxed text-zinc-500">
-                    <ServiceDescription name={s.name} description={s.description} />
-                  </p>
-                  {s.features.length > 0 && (
-                    <div className="mt-4 flex flex-wrap gap-1.5">
-                      {s.features.slice(0, 3).map((f) => (
-                        <span
-                          key={f}
-                          className="rounded-full bg-red-50 px-2.5 py-1 text-xs font-medium text-red-700"
-                        >
-                          {f}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </Reveal>
-            ))}
+          <div className="mt-12">
+            <Reveal direction="up">
+              <ServiceShowcase services={services} />
+            </Reveal>
           </div>
         </div>
       </section>
@@ -268,36 +202,36 @@ export default async function Design1Page() {
             </span>
             {COMPANY.name}가 다른 이유
           </h2>
-          <div className="mt-12 flex flex-col gap-14">
+          <div className="mt-16 flex flex-col gap-24 sm:gap-32">
             {HIGHLIGHT_ITEMS.map((item, i) => {
               const imageFrom = i % 2 === 0 ? "left" : "right";
               const textFrom = i % 2 === 0 ? "right" : "left";
               return (
                 <div
                   key={item.title}
-                  className={`flex flex-col items-center gap-6 md:flex-row md:gap-10 ${
+                  className={`flex flex-col items-center gap-8 md:flex-row md:gap-14 ${
                     i % 2 === 1 ? "md:flex-row-reverse" : ""
                   }`}
                 >
-                  <Reveal direction={imageFrom} className="w-full md:w-1/2">
-                    <div className="group relative h-56 w-full overflow-hidden rounded-2xl sm:h-72">
+                  <Reveal direction={imageFrom} className="w-full md:w-3/5">
+                    <div className="relative h-72 w-full overflow-hidden rounded-md sm:h-96 md:h-[440px]">
                       <Image
                         src={item.image}
                         alt={item.alt}
                         fill
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, 60vw"
+                        className="object-cover"
                       />
                     </div>
                   </Reveal>
-                  <Reveal direction={textFrom} className="w-full md:w-1/2">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-red-600 text-sm font-black text-white">
-                      {i + 1}
-                    </span>
-                    <h3 className="mt-4 text-xl font-bold text-zinc-900 sm:text-2xl">
+                  <Reveal direction={textFrom} className="w-full md:w-2/5">
+                    <p className="font-mono text-xs tracking-[0.3em] text-red-600">
+                      {String(i + 1).padStart(2, "0")} — {item.keyword}
+                    </p>
+                    <h3 className="mt-4 text-2xl font-bold text-zinc-900 sm:text-3xl">
                       {item.title}
                     </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-zinc-500">
+                    <p className="mt-4 text-sm leading-relaxed text-zinc-500 sm:text-base">
                       {item.desc}
                     </p>
                   </Reveal>
