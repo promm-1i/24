@@ -127,7 +127,7 @@ export default async function Design1Page() {
       {/* Hero — 실제 클라이언트 배경 영상 3개 순환 재생 */}
       <HeroVideo sources={HERO_VIDEOS} cornerBadge={<InsuranceBadge />}>
         <div className="mx-auto max-w-xl text-left">
-          <p className="text-lg font-light tracking-wide text-[#f0dfb2] sm:text-xl">
+          <p className="text-lg font-light tracking-wide text-white sm:text-xl">
             기쁜날 함께가는 좋은친구
           </p>
           <h1 className="mt-3 text-3xl font-extrabold leading-tight sm:text-5xl">
