@@ -12,9 +12,32 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const SITE_URL = "https://이사가요.com";
+const OG_DESCRIPTION =
+  "믿을 수 있는 이사 전문업체! 외국인 없는 한국인 직영팀이 포장이사·원/투룸이사·보관이사·사무실이사를 안전하고 신속하게 진행합니다. 지금 무료 견적 신청하세요.";
+
 export const metadata: Metadata = {
-  title: "[회사명] - 믿을 수 있는 이사 전문업체",
-  description: "가정이사, 원룸이사, 보관이사 무료 견적 안내",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "이사가요 | 이사 전문업체",
+    template: "%s | 이사가요",
+  },
+  description: OG_DESCRIPTION,
+  openGraph: {
+    title: "이사가요 | 이사 전문업체",
+    description: OG_DESCRIPTION,
+    url: SITE_URL,
+    siteName: "이사가요",
+    images: [{ url: "/images/og-image.png", width: 1200, height: 900 }],
+    locale: "ko_KR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "이사가요 | 이사 전문업체",
+    description: OG_DESCRIPTION,
+    images: ["/images/og-image.png"],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
