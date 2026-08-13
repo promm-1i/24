@@ -63,10 +63,10 @@ const NAV = [
 ];
 
 const BADGES = [
-  { icon: "🛡️", label: "안전한 포장" },
-  { icon: "🚚", label: "신속한 운송" },
-  { icon: "🧹", label: "깔끔한 정리" },
-  { icon: "🤝", label: "고객 맞춤 서비스" },
+  { icon: "/images/badge-safe-packing.png", label: "안전한 포장" },
+  { icon: "/images/badge-fast-shipping.png", label: "신속한 운송" },
+  { icon: "/images/badge-clean-organizing.png", label: "깔끔한 정리" },
+  { icon: "/images/badge-custom-service.png", label: "고객 맞춤 서비스" },
 ];
 
 export default async function Design1Page() {
@@ -126,32 +126,34 @@ export default async function Design1Page() {
 
       {/* Hero — 실제 클라이언트 배경 영상 3개 순환 재생 */}
       <HeroVideo sources={HERO_VIDEOS} cornerBadge={<InsuranceBadge />}>
-        <p className="text-lg font-bold text-red-400 sm:text-xl">
-          기쁜날 함께가는 좋은친구
-        </p>
-        <h1 className="mt-3 text-3xl font-extrabold leading-tight sm:text-5xl">
-          믿음직한 이사,
-          <br />
-          깔끔한 정리,
-          <br />
-          <span className="text-red-500">새로운 시작</span>
-        </h1>
-        <p className="mx-auto mt-4 max-w-md text-zinc-200">
-          이사가요와 함께 편안하고 완벽한 이사를 경험하세요.
-        </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <a
-            href="#estimate"
-            className="rounded-full bg-red-600 px-8 py-4 text-base font-bold text-white hover:bg-red-700 sm:text-lg"
-          >
-            무료 견적 신청
-          </a>
-          <a
-            href={`tel:${COMPANY.phone}`}
-            className="rounded-full border border-white/70 px-8 py-4 text-base font-bold text-white hover:bg-white/10 sm:text-lg"
-          >
-            전화 상담 {COMPANY.phone}
-          </a>
+        <div className="mx-auto max-w-xl text-left">
+          <p className="text-lg font-light tracking-wide text-[#f0dfb2] sm:text-xl">
+            기쁜날 함께가는 좋은친구
+          </p>
+          <h1 className="mt-3 text-3xl font-extrabold leading-tight sm:text-5xl">
+            믿음직한 이사,
+            <br />
+            깔끔한 정리,
+            <br />
+            <span className="text-red-500">새로운 시작</span>
+          </h1>
+          <p className="mt-4 max-w-md text-zinc-200">
+            이사가요와 함께 편안하고 완벽한 이사를 경험하세요.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-start gap-3">
+            <a
+              href="#estimate"
+              className="rounded-full bg-red-600 px-8 py-4 text-base font-bold text-white hover:bg-red-700 sm:text-lg"
+            >
+              무료 견적 신청
+            </a>
+            <a
+              href={`tel:${COMPANY.phone}`}
+              className="rounded-full border border-white/70 px-8 py-4 text-base font-bold text-white hover:bg-white/10 sm:text-lg"
+            >
+              전화 상담 {COMPANY.phone}
+            </a>
+          </div>
         </div>
       </HeroVideo>
 
@@ -162,7 +164,8 @@ export default async function Design1Page() {
         <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 py-8 sm:px-6 md:grid-cols-4">
           {BADGES.map((b) => (
             <div key={b.label} className="flex flex-col items-center gap-3 text-center">
-              <span className="text-4xl sm:text-5xl">{b.icon}</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={b.icon} alt={b.label} className="h-12 w-12 object-contain sm:h-14 sm:w-14" />
               <span className="text-lg font-bold text-zinc-700 sm:text-xl">{b.label}</span>
             </div>
           ))}
