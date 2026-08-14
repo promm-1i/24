@@ -17,14 +17,20 @@ const HERO_VIDEOS = [
   "/videos/truck-opening.mp4",
 ];
 
-// TODO: swap for real client photos (현장/차량/작업/대표 사진) once received.
-// Curated Unsplash stock photos in the meantime — real, licensed-for-hotlink
-// stock (not generated), picked to roughly match each section's subject.
+// 실제 현장 사진 (클라이언트 전달)
 const GALLERY_IMAGES = [
-  { src: "https://images.unsplash.com/photo-1772724317350-520faccb15e6?w=900&q=80&auto=format&fit=crop", caption: "포장이사" },
-  { src: "https://images.unsplash.com/photo-1758523671165-967ec4af0d76?w=900&q=80&auto=format&fit=crop", caption: "원/투룸이사" },
-  { src: "https://images.unsplash.com/photo-1766040923580-16ad32fae8b4?w=900&q=80&auto=format&fit=crop", caption: "보관이사" },
-  { src: "https://images.unsplash.com/photo-1577702312572-5bb9328a9f15?w=900&q=80&auto=format&fit=crop", caption: "사무실이사" },
+  { src: "/images/gallery/gallery-01.jpg", caption: "사무실이사" },
+  { src: "/images/gallery/gallery-02.jpg", caption: "포장이사" },
+  { src: "/images/gallery/gallery-03.jpg", caption: "포장이사" },
+  { src: "/images/gallery/gallery-04.jpg", caption: "포장이사" },
+  { src: "/images/gallery/gallery-05.jpg", caption: "포장이사" },
+  { src: "/images/gallery/gallery-06.jpg", caption: "원/투룸이사" },
+  { src: "/images/gallery/gallery-07.jpg", caption: "포장이사" },
+  { src: "/images/gallery/gallery-08.jpg", caption: "원/투룸이사" },
+  { src: "/images/gallery/gallery-09.jpg", caption: "사무실이사" },
+  { src: "/images/gallery/gallery-10.jpg", caption: "보관이사" },
+  { src: "/images/gallery/gallery-11.jpg", caption: "원/투룸이사" },
+  { src: "/images/gallery/gallery-12.jpg", caption: "보관이사" },
 ];
 
 // TODO: swap for real client photos once received.
