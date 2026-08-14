@@ -17,20 +17,26 @@ const HERO_VIDEOS = [
   "/videos/moving-truck.mp4",
 ];
 
-// 실제 현장 사진 (클라이언트 전달)
+// 실제 현장 사진 (클라이언트 전달, 파일명을 캡션으로 매칭)
 const GALLERY_IMAGES = [
-  { src: "/images/gallery/gallery-01.jpg", caption: "사무실이사" },
-  { src: "/images/gallery/gallery-02.jpg", caption: "포장이사" },
-  { src: "/images/gallery/gallery-03.jpg", caption: "이사 전 미리 냉장고 상단에 있는 쌓인 먼지 청소하는 사진입니다" },
-  { src: "/images/gallery/gallery-04.jpg", caption: "냉장고에 식품을 넣기 전 살균소독을 진행하는 사진입니다" },
-  { src: "/images/gallery/gallery-05.jpg", caption: "냉장고에 기스가 나지 않도록 꼼꼼하게 포장하는 사진입니다" },
-  { src: "/images/gallery/gallery-06.jpg", caption: "원/투룸이사" },
-  { src: "/images/gallery/gallery-07.jpg", caption: "포장이사" },
-  { src: "/images/gallery/gallery-08.jpg", caption: "원/투룸이사" },
-  { src: "/images/gallery/gallery-09.jpg", caption: "에어컨 분해 및 조립 사진입니다" },
-  { src: "/images/gallery/gallery-10.jpg", caption: "보관이사" },
-  { src: "/images/gallery/gallery-11.jpg", caption: "원/투룸이사" },
-  { src: "/images/gallery/gallery-12.jpg", caption: "보관이사" },
+  { src: "/images/gallery/gallery-01.jpg", caption: "깔끔한 매트리스 설치 사진 입니다" },
+  { src: "/images/gallery/gallery-02.jpg", caption: "냉장고에 기스가 나지 않도록 꼼꼼하게 포장하는 사진입니다" },
+  { src: "/images/gallery/gallery-03.jpg", caption: "냉장고에 식품을 넣기 전 살균소독을 진행하는 사진입니다" },
+  { src: "/images/gallery/gallery-04.jpg", caption: "드럼세탁기 이동설치 사진입니다" },
+  { src: "/images/gallery/gallery-05.jpg", caption: "매트리스 분해 및 조립 사진입니다" },
+  { src: "/images/gallery/gallery-06.jpg", caption: "바닥에 깨끗한 물걸레로 청소중인 사진입니다" },
+  { src: "/images/gallery/gallery-07.jpg", caption: "비품 정리하는 사진입니다" },
+  { src: "/images/gallery/gallery-08.jpg", caption: "식자재 정리하는 사진입니다" },
+  { src: "/images/gallery/gallery-09.jpg", caption: "신발장 정리하는 사진입니다" },
+  { src: "/images/gallery/gallery-10.jpg", caption: "신선하게 운반한 식품을 냉장고에 정리하는 사진입니다" },
+  { src: "/images/gallery/gallery-11.jpg", caption: "안전하게 TV 설치하고 있는 사진입니다" },
+  { src: "/images/gallery/gallery-12.jpg", caption: "에어컨 분해 및 조립 사진입니다" },
+  { src: "/images/gallery/gallery-13.jpg", caption: "이사 완료 된 주방사진 입니다" },
+  { src: "/images/gallery/gallery-14.jpg", caption: "이사 전 미리 냉장고 상단에 있는 쌓인 먼지 청소하는 사진입니다" },
+  { src: "/images/gallery/gallery-15.jpg", caption: "이삿짐 하차지에 보양재를 설치하는 사진입니다" },
+  { src: "/images/gallery/gallery-16.jpg", caption: "주방 집기류 정리중인 사진입니다" },
+  { src: "/images/gallery/gallery-17.jpg", caption: "화장실 서랍장 청소 완료후 사진입니다" },
+  { src: "/images/gallery/gallery-18.jpg", caption: "화장실 짐정리 사진입니다" },
 ];
 
 // TODO: swap for real client photos once received.
