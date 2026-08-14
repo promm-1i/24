@@ -17,7 +17,7 @@ function GalleryCard({ item, onOpen }: { item: GalleryItem; onOpen: (item: Galle
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={item.src} alt={item.caption} className="h-full w-full object-cover" />
-      <span className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent px-3 py-2 text-xs font-bold text-white">
+      <span className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent px-3 py-2 text-sm font-bold text-white">
         {item.caption}
       </span>
     </button>
