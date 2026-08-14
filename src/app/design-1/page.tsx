@@ -183,7 +183,7 @@ export default async function Design1Page() {
         <Reveal direction="up">
           <h2 className="text-center text-2xl font-bold sm:text-3xl">현장 사진</h2>
           <p className="mt-2 text-center text-zinc-500">
-            실제 현장·차량 사진은 전달받는 대로 교체됩니다
+            이사가요 실제 현장 작업사진 입니다
           </p>
         </Reveal>
         <div className="mt-10">
