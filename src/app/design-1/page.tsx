@@ -37,6 +37,7 @@ const GALLERY_IMAGES = [
   { src: "/images/gallery/gallery-16.jpg", caption: "주방 집기류 정리중인 사진입니다" },
   { src: "/images/gallery/gallery-17.jpg", caption: "화장실 서랍장 청소 완료후 사진입니다" },
   { src: "/images/gallery/gallery-18.jpg", caption: "화장실 짐정리 사진입니다" },
+  { src: "/images/gallery/gallery-19.jpg", caption: "책장에 기스가 나지않게 꼼꼼하게 포장하는 사진입니다" },
 ];
 
 // TODO: swap for real client photos once received.
