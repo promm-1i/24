@@ -9,13 +9,12 @@ type ServiceItem = {
   features: string[];
 };
 
-// TODO: swap for real client photos once received.
 const SERVICE_IMAGES: Record<string, string> = {
-  포장이사: "https://images.unsplash.com/photo-1772724317350-520faccb15e6?w=1000&q=80&auto=format&fit=crop",
-  사무실이사: "https://images.unsplash.com/photo-1577702312572-5bb9328a9f15?w=1000&q=80&auto=format&fit=crop",
-  보관이사: "https://images.unsplash.com/photo-1766040923580-16ad32fae8b4?w=1000&q=80&auto=format&fit=crop",
-  관공서이사: "https://images.unsplash.com/photo-1785423832602-53aa5bfd6cd6?w=1000&q=80&auto=format&fit=crop",
-  "원/투룸이사": "https://images.unsplash.com/photo-1758523671165-967ec4af0d76?w=1000&q=80&auto=format&fit=crop",
+  포장이사: "/images/services/moving-packing.jpg",
+  사무실이사: "/images/services/moving-office.jpg",
+  보관이사: "/images/services/moving-storage.jpg",
+  관공서이사: "/images/services/moving-government.jpg",
+  "원/투룸이사": "/images/services/moving-studio.jpg",
 };
 
 const FALLBACK_IMAGE = SERVICE_IMAGES["포장이사"];

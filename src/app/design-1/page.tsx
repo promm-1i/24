@@ -92,7 +92,7 @@ export default async function Design1Page() {
     ? await prisma.post.findMany({
         where: { boardId: board.id, status: "PUBLISHED" },
         orderBy: { createdAt: "desc" },
-        take: 6,
+        take: 10,
       })
     : [];
 

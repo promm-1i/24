@@ -44,16 +44,10 @@ function ReviewCard({ item }: { item: ReviewCardData }) {
 // in the exact same position — the loop point is invisible.
 export function ReviewsMarquee({ reviews }: { reviews: ReviewCardData[] }) {
   const items = reviews.length > 0 ? reviews : PLACEHOLDER_REVIEWS;
-  const isPlaceholder = reviews.length === 0;
   const track = [...items, ...items];
 
   return (
     <div>
-      {isPlaceholder && (
-        <p className="mb-4 text-center text-xs font-semibold text-amber-600">
-          아직 등록된 후기가 없어 임시 문구로 표시 중입니다
-        </p>
-      )}
       <div className="group overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
         <div
           className="flex w-max gap-4 animate-[marquee_40s_linear_infinite] group-hover:[animation-play-state:paused]"
