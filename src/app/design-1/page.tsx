@@ -13,7 +13,7 @@ import { InsuranceBadge } from "@/components/design1/InsuranceBadge";
 
 // 클라이언트가 전달한 실제 배경 영상 (public/videos) — 순서대로 반복 재생
 const HERO_VIDEOS = [
-  "/videos/moving-furniture.mp4",
+  "/videos/moving-final.mp4",
   "/videos/moving-truck.mp4",
 ];
 
