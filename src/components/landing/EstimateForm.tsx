@@ -3,6 +3,25 @@
 import { useState, type FormEvent } from "react";
 import { KOREA_REGIONS, SIDO_LIST } from "@/lib/koreaRegions";
 
+const TERMS_TEXT = `제1조 (목적)
+본 약관은 이사가요(이하 "회사")가 제공하는 이사 견적 상담 신청 서비스(이하 "서비스") 이용과 관련하여 회사와 이용자 간의 권리, 의무 및 책임사항을 정함을 목적으로 합니다.
+
+제2조 (서비스의 내용)
+회사는 이용자가 입력한 정보를 바탕으로 이사 견적 상담을 위해 이용자에게 유선 또는 문자로 연락합니다.
+
+제3조 (이용자의 의무)
+이용자는 신청 시 정확한 정보를 입력해야 하며, 허위 정보 입력으로 발생하는 불이익에 대해 회사는 책임지지 않습니다.
+
+제4조 (서비스의 변경 및 중단)
+회사는 서비스 품질 향상을 위해 사전 고지 후 서비스 내용을 변경하거나 일시 중단할 수 있습니다.`;
+
+const PRIVACY_TEXT = `이사가요는 견적 상담을 위해 아래와 같이 개인정보를 수집·이용합니다.
+
+1. 수집 항목: 이름, 연락처, 출발지/도착지 주소, 이사 예정일, 요청 사항
+2. 수집 목적: 이사 견적 상담 및 안내, 상담 이력 관리
+3. 보유 및 이용 기간: 상담 완료일로부터 6개월 (관계 법령에 따른 보관 의무가 있는 경우 해당 기간까지)
+4. 동의 거부 권리: 이용자는 개인정보 수집·이용에 동의하지 않을 권리가 있으며, 동의하지 않을 경우 견적 상담 서비스 이용이 제한될 수 있습니다.`;
+
 type SubmitState =
   | { status: "idle" }
   | { status: "submitting" }
@@ -96,7 +115,15 @@ function AddressFields({
   );
 }
 
-export function EstimateForm({ accent = "blue" }: { accent?: AccentKey }) {
+export function EstimateForm({
+  accent = "blue",
+  bare = false,
+  onSuccess,
+}: {
+  accent?: AccentKey;
+  bare?: boolean;
+  onSuccess?: () => void;
+}) {
   const [state, setState] = useState<SubmitState>({ status: "idle" });
   const [fromSido, setFromSido] = useState("");
   const [fromGugun, setFromGugun] = useState("");
@@ -145,6 +172,7 @@ export function EstimateForm({ accent = "blue" }: { accent?: AccentKey }) {
       setToSido("");
       setToGugun("");
       setState({ status: "success" });
+      onSuccess?.();
     } catch {
       setState({ status: "error", message: "네트워크 오류가 발생했습니다." });
     }
@@ -152,7 +180,7 @@ export function EstimateForm({ accent = "blue" }: { accent?: AccentKey }) {
 
   if (state.status === "success") {
     return (
-      <div className="rounded-xl bg-white p-8 text-center shadow-sm">
+      <div className={bare ? "p-8 text-center" : "rounded-xl bg-white p-8 text-center shadow-sm"}>
         <p className="text-lg font-bold text-zinc-900">
           견적 요청이 접수되었습니다.
         </p>
@@ -177,7 +205,11 @@ export function EstimateForm({ accent = "blue" }: { accent?: AccentKey }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="grid grid-cols-1 gap-3 rounded-xl bg-white p-6 shadow-sm sm:grid-cols-2 sm:p-8"
+      className={
+        bare
+          ? "grid grid-cols-1 gap-3 sm:grid-cols-2"
+          : "grid grid-cols-1 gap-3 rounded-xl bg-white p-6 shadow-sm sm:grid-cols-2 sm:p-8"
+      }
     >
       <input name="name" required placeholder="이름" className={inputClass} />
       <input
@@ -220,6 +252,48 @@ export function EstimateForm({ accent = "blue" }: { accent?: AccentKey }) {
         placeholder="요청 사항 (선택, 한 줄로 입력)"
         className={`${inputClass} sm:col-span-2`}
       />
+
+      <div className="flex flex-col gap-2 rounded-md bg-zinc-50 p-3 text-xs text-zinc-600 sm:col-span-2">
+        <label className="flex items-start gap-2">
+          <input
+            type="checkbox"
+            name="agreeTerms"
+            required
+            className="mt-0.5 h-4 w-4 shrink-0 accent-current"
+          />
+          <span>
+            <span className="font-semibold text-zinc-800">이용약관 동의 (필수)</span>
+          </span>
+        </label>
+        <details className="ml-6 -mt-1 text-zinc-500">
+          <summary className="cursor-pointer select-none text-[11px] underline">
+            전문 보기
+          </summary>
+          <p className="mt-1 max-h-32 overflow-y-auto whitespace-pre-line rounded border border-zinc-200 bg-white p-2 text-[11px] leading-relaxed">
+            {TERMS_TEXT}
+          </p>
+        </details>
+
+        <label className="flex items-start gap-2">
+          <input
+            type="checkbox"
+            name="agreePrivacy"
+            required
+            className="mt-0.5 h-4 w-4 shrink-0 accent-current"
+          />
+          <span>
+            <span className="font-semibold text-zinc-800">개인정보 수집·이용 동의 (필수)</span>
+          </span>
+        </label>
+        <details className="ml-6 -mt-1 text-zinc-500">
+          <summary className="cursor-pointer select-none text-[11px] underline">
+            전문 보기
+          </summary>
+          <p className="mt-1 max-h-32 overflow-y-auto whitespace-pre-line rounded border border-zinc-200 bg-white p-2 text-[11px] leading-relaxed">
+            {PRIVACY_TEXT}
+          </p>
+        </details>
+      </div>
 
       {state.status === "error" && (
         <p className="text-sm text-red-600 sm:col-span-2">{state.message}</p>

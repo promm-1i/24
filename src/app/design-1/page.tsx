@@ -3,6 +3,7 @@ import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 import { COMPANY } from "@/lib/content";
 import { EstimateForm } from "@/components/landing/EstimateForm";
+import { EstimateModalProvider, EstimateModalTrigger } from "@/components/landing/EstimateModal";
 import { HeroVideo } from "@/components/design1/HeroVideo";
 import { ReviewsMarquee } from "@/components/design1/ReviewsMarquee";
 import { GalleryMarquee } from "@/components/design1/GalleryMarquee";
@@ -107,6 +108,7 @@ export default async function Design1Page() {
       : GALLERY_IMAGES.map((g) => ({ id: g.src, src: g.src, caption: g.caption }));
 
   return (
+    <EstimateModalProvider>
     <div className="min-h-screen bg-white pb-16 text-zinc-900 md:pb-0">
       <QuickMenu />
       {/* Header */}
@@ -129,12 +131,9 @@ export default async function Design1Page() {
               </a>
             ))}
           </nav>
-          <a
-            href="#estimate"
-            className="rounded-full bg-red-600 px-4 py-2 text-sm font-bold text-white hover:bg-red-700"
-          >
+          <EstimateModalTrigger className="rounded-full bg-red-600 px-4 py-2 text-sm font-bold text-white hover:bg-red-700">
             견적 신청하기
-          </a>
+          </EstimateModalTrigger>
         </div>
       </header>
 
@@ -155,12 +154,9 @@ export default async function Design1Page() {
             이사가요와 함께 편안하고 완벽한 이사를 경험하세요.
           </p>
           <div className="mt-8 flex flex-wrap justify-start gap-3">
-            <a
-              href="#estimate"
-              className="rounded-full bg-red-600 px-8 py-4 text-base font-bold text-white hover:bg-red-700 sm:text-lg"
-            >
+            <EstimateModalTrigger className="rounded-full bg-red-600 px-8 py-4 text-base font-bold text-white hover:bg-red-700 sm:text-lg">
               무료 견적 신청
-            </a>
+            </EstimateModalTrigger>
             <a
               href={`tel:${COMPANY.phone}`}
               className="rounded-full border border-white/70 px-8 py-4 text-base font-bold text-white hover:bg-white/10 sm:text-lg"
@@ -386,5 +382,6 @@ export default async function Design1Page() {
         </div>
       </footer>
     </div>
+    </EstimateModalProvider>
   );
 }
