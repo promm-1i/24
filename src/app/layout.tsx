@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 const SITE_URL = "https://이사가요.com";
 const OG_DESCRIPTION =
-  "믿을 수 있는 이사 전문업체! 외국인 없는 한국인 직영팀이 포장이사·원/투룸이사·보관이사·사무실이사를 안전하고 신속하게 진행합니다. 지금 무료 견적 신청하세요.";
+  "외국인 없는 한국인 직영팀이 안전하고 신속하게 진행하는 이사 전문업체, 이사가요. 지금 무료 견적 받아보세요.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
