@@ -40,28 +40,29 @@ const GALLERY_IMAGES = [
   { src: "/images/gallery/gallery-19.jpg", caption: "책장에 기스가 나지않게 꼼꼼하게 포장하는 사진입니다" },
 ];
 
-// TODO: swap for real client photos once received.
+// 실제 현장/브랜드 사진 (클라이언트 전달)
 const HIGHLIGHT_ITEMS = [
   {
     keyword: "DIRECT TEAM",
     titleLines: ["외국인 NO,", "한국인으로만 구성된 직영팀"],
     descLines: ["하청 없이 이사가요 소속 직영팀이 처음부터 끝까지", "직접 진행합니다."],
-    image: "https://images.unsplash.com/photo-1600518464441-9154a4dea21b?w=1200&q=80&auto=format&fit=crop",
+    image: "/images/highlight-1.jpg",
     alt: "이사가요 직영팀",
   },
   {
     keyword: "SAME MANAGER",
     titleLines: ["방문견적을 담당 매니저가", "이사 당일 처음부터 끝까지", "책임관리 합니다"],
     descLines: ["현장을 확인한 담당 매니저가 이사 당일까지 직접 챙기고 관리합니다."],
-    image: "https://images.unsplash.com/photo-1523705480679-b5d0cc17a656?w=1200&q=80&auto=format&fit=crop",
+    image: "/images/highlight-2.jpg",
     alt: "현장 방문 견적 작성",
   },
   {
     keyword: "CAREFUL MOVING",
     titleLines: ["합리적인 비용,", "철저한 사후관리 및 AS"],
     descLines: ["불필요한 비용없이 합리적인 가격으로 진행하며,", "철저한 사후관리 및 AS"],
-    image: "https://images.unsplash.com/photo-1580451301279-9ffaa7d55b4b?w=1200&q=80&auto=format&fit=crop",
-    alt: "꼼꼼한 포장",
+    image: "/images/highlight-3.jpg",
+    alt: "KB손해보험 3억원 가입",
+    fit: "contain" as const,
   },
 ];
 
@@ -242,13 +243,17 @@ export default async function Design1Page() {
                   }`}
                 >
                   <Reveal direction={imageFrom} className="w-full md:w-3/5">
-                    <div className="relative h-72 w-full overflow-hidden rounded-md sm:h-96 md:h-[440px]">
+                    <div
+                      className={`relative h-72 w-full overflow-hidden rounded-md sm:h-96 md:h-[440px] ${
+                        item.fit === "contain" ? "bg-zinc-50" : ""
+                      }`}
+                    >
                       <Image
                         src={item.image}
                         alt={item.alt}
                         fill
                         sizes="(max-width: 768px) 100vw, 60vw"
-                        className="object-cover"
+                        className={item.fit === "contain" ? "object-contain" : "object-cover"}
                       />
                     </div>
                   </Reveal>
