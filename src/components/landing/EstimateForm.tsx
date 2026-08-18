@@ -17,7 +17,7 @@ const TERMS_TEXT = `제1조 (목적)
 
 const PRIVACY_TEXT = `이사가요는 견적 상담을 위해 아래와 같이 개인정보를 수집·이용합니다.
 
-1. 수집 항목: 이름, 연락처, 출발지/도착지 주소, 이사 예정일, 요청 사항
+1. 수집 항목: 이름, 연락처, 출발지/도착지, 요청 사항
 2. 수집 목적: 이사 견적 상담 및 안내, 상담 이력 관리
 3. 보유 및 이용 기간: 상담 완료일로부터 6개월 (관계 법령에 따른 보관 의무가 있는 경우 해당 기간까지)
 4. 동의 거부 권리: 이용자는 개인정보 수집·이용에 동의하지 않을 권리가 있으며, 동의하지 않을 경우 견적 상담 서비스 이용이 제한될 수 있습니다.`;
@@ -59,8 +59,6 @@ function AddressFields({
   gugun,
   onSidoChange,
   onGugunChange,
-  detailName,
-  inputClass,
   selectClass,
 }: {
   label: string;
@@ -68,18 +66,15 @@ function AddressFields({
   gugun: string;
   onSidoChange: (v: string) => void;
   onGugunChange: (v: string) => void;
-  detailName: string;
-  inputClass: string;
   selectClass: string;
 }) {
   const gugunOptions = sido ? KOREA_REGIONS[sido] : [];
 
   return (
     <div className="sm:col-span-2">
-      <p className="mb-1 text-xs font-semibold text-zinc-500">{label}</p>
+      <p className="mb-1 text-xs font-semibold text-zinc-500">{label} (선택)</p>
       <div className="grid grid-cols-2 gap-2">
         <select
-          required
           value={sido}
           onChange={(e) => onSidoChange(e.target.value)}
           className={selectClass}
@@ -92,7 +87,6 @@ function AddressFields({
           ))}
         </select>
         <select
-          required
           value={gugun}
           onChange={(e) => onGugunChange(e.target.value)}
           disabled={!sido}
@@ -106,11 +100,6 @@ function AddressFields({
           ))}
         </select>
       </div>
-      <input
-        name={detailName}
-        placeholder="상세주소 (동/건물명, 선택)"
-        className={`mt-2 w-full ${inputClass}`}
-      />
     </div>
   );
 }
@@ -129,17 +118,36 @@ export function EstimateForm({
   const [fromGugun, setFromGugun] = useState("");
   const [toSido, setToSido] = useState("");
   const [toGugun, setToGugun] = useState("");
+  const [phone, setPhone] = useState("");
+  const [phoneError, setPhoneError] = useState<string | null>(null);
   const styles = ACCENT_STYLES[accent];
+
+  const PHONE_PATTERN = /^\d{3}-\d{4}-\d{4}$/;
+
+  function handlePhoneChange(raw: string) {
+    const digits = raw.replace(/\D/g, "").slice(0, 11);
+    let formatted = digits;
+    if (digits.length > 7) {
+      formatted = `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
+    } else if (digits.length > 3) {
+      formatted = `${digits.slice(0, 3)}-${digits.slice(3)}`;
+    }
+    setPhone(formatted);
+    if (phoneError) setPhoneError(null);
+  }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
 
-    const fromDetail = String(data.get("fromDetail") ?? "").trim();
-    const toDetail = String(data.get("toDetail") ?? "").trim();
-    const fromAddr = [fromSido, fromGugun, fromDetail].filter(Boolean).join(" ");
-    const toAddr = [toSido, toGugun, toDetail].filter(Boolean).join(" ");
+    if (!PHONE_PATTERN.test(phone)) {
+      setPhoneError("연락처를 정확하게 입력해주세요.");
+      return;
+    }
+
+    const fromAddr = [fromSido, fromGugun].filter(Boolean).join(" ");
+    const toAddr = [toSido, toGugun].filter(Boolean).join(" ");
 
     setState({ status: "submitting" });
 
@@ -149,10 +157,9 @@ export function EstimateForm({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: data.get("name"),
-          phone: data.get("phone"),
+          phone,
           fromAddr,
           toAddr,
-          moveDate: data.get("moveDate"),
           memo: data.get("memo"),
         }),
       });
@@ -171,6 +178,7 @@ export function EstimateForm({
       setFromGugun("");
       setToSido("");
       setToGugun("");
+      setPhone("");
       setState({ status: "success" });
       onSuccess?.();
     } catch {
@@ -212,12 +220,18 @@ export function EstimateForm({
       }
     >
       <input name="name" required placeholder="이름" className={inputClass} />
-      <input
-        name="phone"
-        required
-        placeholder="연락처 (010-0000-0000)"
-        className={inputClass}
-      />
+      <div>
+        <input
+          name="phone"
+          required
+          value={phone}
+          onChange={(e) => handlePhoneChange(e.target.value)}
+          inputMode="numeric"
+          placeholder="연락처 (010-1234-5678)"
+          className={`w-full ${inputClass} ${phoneError ? "border-red-400" : ""}`}
+        />
+        {phoneError && <p className="mt-1 text-xs text-red-600">{phoneError}</p>}
+      </div>
 
       <AddressFields
         label="출발지"
@@ -228,8 +242,6 @@ export function EstimateForm({
           setFromGugun("");
         }}
         onGugunChange={setFromGugun}
-        detailName="fromDetail"
-        inputClass={inputClass}
         selectClass={selectClass}
       />
       <AddressFields
@@ -241,15 +253,9 @@ export function EstimateForm({
           setToGugun("");
         }}
         onGugunChange={setToGugun}
-        detailName="toDetail"
-        inputClass={inputClass}
         selectClass={selectClass}
       />
 
-      <div className="sm:col-span-2">
-        <p className="mb-1 text-xs font-semibold text-zinc-500">이사 예정일 (선택)</p>
-        <input name="moveDate" type="date" className={`w-full ${inputClass}`} />
-      </div>
       <input
         name="memo"
         placeholder="요청 사항 (선택, 한 줄로 입력)"

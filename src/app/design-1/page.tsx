@@ -38,7 +38,6 @@ const GALLERY_IMAGES = [
   { src: "/images/gallery/gallery-16.jpg", caption: "주방 집기류 정리중인 사진입니다" },
   { src: "/images/gallery/gallery-17.jpg", caption: "화장실 서랍장 청소 완료후 사진입니다" },
   { src: "/images/gallery/gallery-18.jpg", caption: "화장실 짐정리 사진입니다" },
-  { src: "/images/gallery/gallery-19.jpg", caption: "책장에 기스가 나지않게 꼼꼼하게 포장하는 사진입니다" },
 ];
 
 // 실제 현장/브랜드 사진 (클라이언트 전달)
@@ -52,8 +51,8 @@ const HIGHLIGHT_ITEMS = [
   },
   {
     keyword: "SAME MANAGER",
-    titleLines: ["방문견적을 담당 매니저가", "이사 당일 처음부터 끝까지", "책임관리 합니다"],
-    descLines: ["현장을 확인한 담당 매니저가 이사 당일까지 직접 챙기고 관리합니다."],
+    titleLines: ["방문견적 담당 매니저가", "이사 당일 처음부터 끝까지", "책임관리 합니다"],
+    descLines: ["견적부터 마무리까지 같은 매니저가 직접 관리해 원활한 소통, 안심할 수 있습니다."],
     image: "/images/highlight-2.jpg",
     alt: "현장 방문 견적 작성",
   },

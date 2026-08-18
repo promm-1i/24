@@ -16,14 +16,14 @@ export async function POST(request: Request) {
   const moveDateRaw = String(body.moveDate ?? "").trim();
   const memo = body.memo ? String(body.memo).trim() : null;
 
-  if (!name || !phone || !fromAddr || !toAddr) {
+  if (!name || !phone) {
     return NextResponse.json(
-      { error: "이름, 연락처, 출발지, 도착지는 필수입니다." },
+      { error: "이름, 연락처는 필수입니다." },
       { status: 400 }
     );
   }
 
-  const phonePattern = /^[0-9-]{9,13}$/;
+  const phonePattern = /^\d{3}-\d{4}-\d{4}$/;
   if (!phonePattern.test(phone)) {
     return NextResponse.json(
       { error: "연락처 형식을 확인해주세요." },

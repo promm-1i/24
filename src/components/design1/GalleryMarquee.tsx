@@ -42,7 +42,7 @@ export function GalleryMarquee({ items }: { items: GalleryItem[] }) {
   return (
     <>
       <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
-        <div className="flex w-max gap-4 animate-[marquee_89s_linear_infinite] hover:[animation-play-state:paused]">
+        <div className="flex w-max gap-4 animate-[marquee_84s_linear_infinite] hover:[animation-play-state:paused]">
           {track.map((item, i) => (
             <GalleryCard key={`${item.id}-${i}`} item={item} onOpen={setSelected} />
           ))}
