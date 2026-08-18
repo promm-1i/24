@@ -246,7 +246,10 @@ export function EstimateForm({
         selectClass={selectClass}
       />
 
-      <input name="moveDate" type="date" className={`${inputClass} sm:col-span-2`} />
+      <div className="sm:col-span-2">
+        <p className="mb-1 text-xs font-semibold text-zinc-500">이사 예정일 (선택)</p>
+        <input name="moveDate" type="date" className={`w-full ${inputClass}`} />
+      </div>
       <input
         name="memo"
         placeholder="요청 사항 (선택, 한 줄로 입력)"
