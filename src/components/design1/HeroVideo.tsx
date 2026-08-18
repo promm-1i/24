@@ -7,7 +7,9 @@ type Slot = { src: string; active: boolean };
 // Double-buffered video player: two <video> elements share the slot,
 // the hidden one preloads the next clip while the visible one plays,
 // so switching clips doesn't show a loading/grey frame (after the very
-// first clip, which still has to load once on page open).
+// first clip, which still has to load once on page open). The backup
+// clip's download is deferred ~2.5s (see `warmed`) so visitors who
+// bounce immediately don't pay bandwidth for a clip they never see.
 export function HeroVideo({
   sources,
   children,
@@ -23,6 +25,23 @@ export function HeroVideo({
   ]);
   const nextIndexRef = useRef(2 % sources.length);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([null, null]);
+  // Defer the backup clip's download a couple seconds so instant-bounce
+  // visitors (common on ad traffic) don't pay for a video they never see.
+  const [warmed, setWarmed] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setWarmed(true), 2500);
+    return () => clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
+    if (!warmed) return;
+    slots.forEach((slot, i) => {
+      if (!slot.active) videoRefs.current[i]?.load();
+    });
+    // Only needs to run once, when warmed flips true.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [warmed]);
 
   useEffect(() => {
     slots.forEach((slot, i) => {
@@ -80,11 +99,11 @@ export function HeroVideo({
             slot.active ? "opacity-100" : "opacity-0"
           }`}
           src={slot.src}
-          autoPlay
+          autoPlay={slot.active}
           muted
           playsInline
           disablePictureInPicture
-          preload="auto"
+          preload={slot.active || warmed ? "auto" : "none"}
           onEnded={() => handleEnded(i)}
         />
       ))}

@@ -16,7 +16,13 @@ function GalleryCard({ item, onOpen }: { item: GalleryItem; onOpen: (item: Galle
       className="relative h-[336px] w-[430px] shrink-0 overflow-hidden rounded-lg text-left sm:h-[384px] sm:w-[480px]"
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={item.src} alt={item.caption} className="h-full w-full object-cover" />
+      <img
+        src={item.src}
+        alt={item.caption}
+        loading="lazy"
+        decoding="async"
+        className="h-full w-full object-cover"
+      />
       <span className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent px-3 py-2 text-sm font-bold text-white">
         {item.caption}
       </span>
