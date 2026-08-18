@@ -199,8 +199,8 @@ export function EstimateForm({
   }
 
   const submitting = state.status === "submitting";
-  const inputClass = `rounded-md border border-zinc-300 px-3 py-2 text-sm outline-none ${styles.focus}`;
-  const selectClass = `rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm outline-none ${styles.focus}`;
+  const inputClass = `rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-900 outline-none placeholder:text-zinc-500 ${styles.focus}`;
+  const selectClass = `rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 outline-none ${styles.focus}`;
 
   return (
     <form
